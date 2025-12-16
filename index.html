@@ -67,7 +67,6 @@
             </Icon>
         );
 
-        // 改用斧頭 (Axe) 圖示，符合狂戰士形象且修復顯示問題
         const Axe = (props) => (
             <Icon {...props}>
                 <path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9" />
@@ -142,7 +141,14 @@
             </Icon>
         );
 
+        const Youtube = (props) => (
+            <Icon {...props}>
+                <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                <path d="m10 15 5-3-5-3z" />
+            </Icon>
+        );
 
+        // --- 主應用程式 ---
 
         const SkillInfoApp = () => {
             const [activeTab, setActiveTab] = useState('home');
@@ -158,7 +164,8 @@
                     gradient: 'from-slate-800 to-indigo-900',
                     lightGradient: 'from-indigo-50 to-slate-100',
                     badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-                    hoverBorder: 'hover:border-indigo-300'
+                    hoverBorder: 'hover:border-indigo-300',
+                    videoUrl: 'https://www.youtube.com/watch?v=JIauw6VhzUM'
                 },
                 {
                     id: 'thunderer',
@@ -170,19 +177,21 @@
                     gradient: 'from-amber-500 to-orange-600',
                     lightGradient: 'from-amber-50 to-orange-50',
                     badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
-                    hoverBorder: 'hover:border-amber-300'
+                    hoverBorder: 'hover:border-amber-300',
+                    videoUrl: 'https://www.youtube.com/watch?v=QS_LTXKQ-Ic'
                 },
                 {
                     id: 'berserker',
                     name: '狂戰士',
-                    icon: <Axe className="w-6 h-6" />, // 使用 Axe 替代 Sword
+                    icon: <Axe className="w-6 h-6" />,
                     color: 'text-rose-800',
                     bgColor: 'bg-rose-50',
                     borderColor: 'border-rose-200',
                     gradient: 'from-red-700 to-rose-900',
                     lightGradient: 'from-red-50 to-rose-50',
                     badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
-                    hoverBorder: 'hover:border-rose-300'
+                    hoverBorder: 'hover:border-rose-300',
+                    videoUrl: 'https://www.youtube.com/watch?v=etfB7Lpp9KM'
                 },
                 {
                     id: 'gunner',
@@ -194,7 +203,8 @@
                     gradient: 'from-blue-600 to-cyan-700',
                     lightGradient: 'from-sky-50 to-slate-100',
                     badgeColor: 'bg-sky-100 text-sky-800 border-sky-200',
-                    hoverBorder: 'hover:border-sky-300'
+                    hoverBorder: 'hover:border-sky-300',
+                    videoUrl: 'https://www.youtube.com/watch?v=etfB7Lpp9KM'
                 }
             ];
 
@@ -561,18 +571,18 @@
                                                 <h2 className={`text-xl font-bold mb-4 ${config.color} tracking-wide`}>{config.name}</h2>
                                                 
                                                 <div className="flex justify-center gap-3 text-sm">
-                                                    <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[70px]">
-                                                        <span className="text-[10px] font-bold text-red-600 uppercase mb-0.5 tracking-wider">英雄</span>
-                                                        <span className="font-black text-lg leading-tight text-slate-800">{config.skills.hero.length}</span>
+                                                    <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[80px]">
+                                                        <span className="text-base font-bold text-red-600 uppercase mb-1 tracking-wider">英雄</span>
+                                                        <span className="font-black text-2xl leading-tight text-slate-800">{config.skills.hero.length}</span>
                                                     </div>
-                                                    <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[70px]">
-                                                        <span className="text-[10px] font-bold text-purple-600 uppercase mb-0.5 tracking-wider">傳說</span>
-                                                        <span className="font-black text-lg leading-tight text-slate-800">{config.skills.legend1.length + config.skills.legend2.length}</span>
+                                                    <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[80px]">
+                                                        <span className="text-base font-bold text-purple-600 uppercase mb-1 tracking-wider">傳說</span>
+                                                        <span className="font-black text-2xl leading-tight text-slate-800">{config.skills.legend1.length + config.skills.legend2.length}</span>
                                                     </div>
                                                 </div>
 
-                                                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-1 text-slate-400 text-xs font-bold group-hover:text-slate-800 transition-colors uppercase tracking-widest">
-                                                    查看詳情 <ChevronRight className="w-3 h-3" />
+                                                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-1 text-slate-400 text-base font-bold group-hover:text-slate-800 transition-colors uppercase tracking-widest">
+                                                    查看詳情 <ChevronRight className="w-5 h-5" />
                                                 </div>
                                             </div>
                                         </div>
@@ -590,7 +600,19 @@
                                                 </div>
                                                 <div>
                                                     <h2 className="text-3xl font-black text-slate-800 tracking-tight">{config.name} 完整資訊</h2>
-                                                    <p className={`text-sm font-bold ${config.color} opacity-80 uppercase tracking-wider`}>職業資料庫</p>
+                                                    <div className="flex items-center gap-3 mt-1">
+                                                        <p className={`text-sm font-bold ${config.color} opacity-80 uppercase tracking-wider`}>職業轉職情報</p>
+                                                        <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                                                        <a 
+                                                            href={config.videoUrl} 
+                                                            target="_blank" 
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center gap-1.5 text-base font-bold text-red-600 hover:text-red-700 hover:underline transition-colors"
+                                                        >
+                                                            <Youtube className="w-5 h-5" />
+                                                            觀看轉職攻略影片
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -610,5 +632,4 @@
         root.render(<SkillInfoApp />);
     </script>
 </body>
-
 </html>
