@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天堂M 8周年改版轉職建議白皮書</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- 內嵌圖示元件 (移除外部 Lucide 依賴以確保穩定性) ---
+
+        const Icon = ({ children, className = "", ...props }) => (
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className={className}
+                {...props}
+            >
+                {children}
+            </svg>
+        );
+
+        const Shield = (props) => (
+            <Icon {...props}>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </Icon>
+        );
+
+        const Zap = (props) => (
+            <Icon {...props}>
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </Icon>
+        );
+
+        const Crosshair = (props) => (
+            <Icon {...props}>
+                <circle cx="12" cy="12" r="10" />
+                <line x1="22" y1="12" x2="18" y2="12" />
+                <line x1="6" y1="12" x2="2" y2="12" />
+                <line x1="12" y1="6" x2="12" y2="2" />
+                <line x1="12" y1="22" x2="12" y2="18" />
+            </Icon>
+        );
+
+        // 改用斧頭 (Axe) 圖示，符合狂戰士形象且修復顯示問題
+        const Axe = (props) => (
+            <Icon {...props}>
+                <path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9" />
+                <path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z" />
+            </Icon>
+        );
+
+        const BookOpen = (props) => (
+            <Icon {...props}>
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </Icon>
+        );
+
+        const ChevronRight = (props) => (
+            <Icon {...props}>
+                <path d="m9 18 6-6-6-6" />
+            </Icon>
+        );
+
+        const Home = (props) => (
+            <Icon {...props}>
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+            </Icon>
+        );
+
+        const ArrowRightLeft = (props) => (
+            <Icon {...props}>
+                <path d="m16 3 4 4-4 4" />
+                <path d="M20 7H4" />
+                <path d="m8 21-4-4 4-4" />
+                <path d="M4 17h16" />
+            </Icon>
+        );
+
+        const ArrowUp = (props) => (
+            <Icon {...props}>
+                <path d="m5 12 7-7 7 7" />
+                <path d="M12 19V5" />
+            </Icon>
+        );
+
+        const Calculator = (props) => (
+            <Icon {...props}>
+                <rect width="16" height="20" x="4" y="2" rx="2" />
+                <line x1="8" x2="16" y1="6" y2="6" />
+                <line x1="16" x2="16" y1="14" y2="18" />
+                <path d="M16 10h.01" />
+                <path d="M12 10h.01" />
+                <path d="M8 10h.01" />
+                <path d="M12 14h.01" />
+                <path d="M8 14h.01" />
+                <path d="M12 18h.01" />
+                <path d="M8 18h.01" />
+            </Icon>
+        );
+
+        const Percent = (props) => (
+            <Icon {...props}>
+                <line x1="19" x2="5" y1="5" y2="19" />
+                <circle cx="6.5" cy="6.5" r="2.5" />
+                <circle cx="17.5" cy="17.5" r="2.5" />
+            </Icon>
+        );
+
+        const ExternalLink = (props) => (
+            <Icon {...props}>
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" x2="21" y1="14" y2="3" />
+            </Icon>
+        );
+
+        // --- 主應用程式 ---
+
+        const SkillInfoApp = () => {
+            const [activeTab, setActiveTab] = useState('home');
+
+            const classesConfig = [
+                {
+                    id: 'darkknight',
+                    name: '暗黑騎士',
+                    icon: <Shield className="w-6 h-6" />,
+                    color: 'text-indigo-800',
+                    bgColor: 'bg-indigo-50',
+                    borderColor: 'border-indigo-200',
+                    gradient: 'from-slate-800 to-indigo-900',
+                    lightGradient: 'from-indigo-50 to-slate-100',
+                    badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+                    hoverBorder: 'hover:border-indigo-300'
+                },
+                {
+                    id: 'thunderer',
+                    name: '雷神',
+                    icon: <Zap className="w-6 h-6" />,
+                    color: 'text-amber-700',
+                    bgColor: 'bg-amber-50',
+                    borderColor: 'border-amber-200',
+                    gradient: 'from-amber-500 to-orange-600',
+                    lightGradient: 'from-amber-50 to-orange-50',
+                    badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
+                    hoverBorder: 'hover:border-amber-300'
+                },
+                {
+                    id: 'berserker',
+                    name: '狂戰士',
+                    icon: <Axe className="w-6 h-6" />, // 使用 Axe 替代 Sword
+                    color: 'text-rose-800',
+                    bgColor: 'bg-rose-50',
+                    borderColor: 'border-rose-200',
+                    gradient: 'from-red-700 to-rose-900',
+                    lightGradient: 'from-red-50 to-rose-50',
+                    badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
+                    hoverBorder: 'hover:border-rose-300'
+                },
+                {
+                    id: 'gunner',
+                    name: '槍手',
+                    icon: <Crosshair className="w-6 h-6" />,
+                    color: 'text-sky-800',
+                    bgColor: 'bg-sky-50',
+                    borderColor: 'border-sky-200',
+                    gradient: 'from-blue-600 to-cyan-700',
+                    lightGradient: 'from-sky-50 to-slate-100',
+                    badgeColor: 'bg-sky-100 text-sky-800 border-sky-200',
+                    hoverBorder: 'hover:border-sky-300'
+                }
+            ];
+
+            const salesData = {
+                gunner: {
+                    hero: ['充能射擊', '快速射擊(士兵)', '格勒西亞人護盾', '魔法射擊:恐怖'],
+                    legend1: ['魔法射擊:衝暈', '緊急照護'],
+                    legend2: ['準備開火', '破壞射擊:反屏']
+                },
+                thunderer: {
+                    hero: ['閃雷標記:神秘', '超載充能', '鎖鏈閃光:神秘', '閃電攻擊:神秘'], 
+                    legend1: ['雷電盔甲:奧術', '超載充能:神秘'],
+                    legend2: ['雷霆防護:神秘', '等離子電場']
+                },
+                berserker: {
+                    hero: ['印地安戰斧', '泰坦:魔法', '泰坦:子彈', '狂戰士'],
+                    legend1: ['亡命之徒', '泰坦:上升'],
+                    legend2: ['亡命之徒:上升', '狂戰士:上升']
+                },
+                darkknight: {
+                    hero: ['無效區域', '暗黑不死', '暗黑之魂:復仇者', '幽冥防護'],
+                    legend1: ['幻覺', '無效區域:復仇者'], 
+                    legend2: ['黑暗之鏡:復仇者', '復仇屏障:復仇者'] 
+                }
+            };
+
+            const transferData = {
+                gunner: [
+                    { name: '魔力射擊:捕捉', rank: '英雄', method: '700,000', pvp: '6', pve: '6', upgraded: true },
+                    { name: '魔力射擊:恐懼', rank: '英雄', method: '限時180W', pvp: '買', pve: '' },
+                    { name: '魔力射擊:相消', rank: '英雄', method: '', pvp: '交易所/轉卡', pve: '' },
+                    { name: '衝刺', rank: '英雄', method: '160,000', pvp: '買', pve: '買' },
+                    { name: '死亡狙擊', rank: '英雄', method: '1,000,000', pvp: '交易所', pve: '買' },
+                    { name: '破壞射擊', rank: '英雄', method: '', pvp: '5', pve: '3', upgraded: true },
+                    { name: '充能射擊', rank: '英雄', method: '限時180W', pvp: '交易所', pve: '' },
+                    { name: '穿甲彈', rank: '英雄', method: '', pvp: '交易所', pve: '' },
+                    { name: '神射手', rank: '英雄', method: '', pvp: '4', pve: '2', upgraded: true },
+                    { name: '防禦提升:步兵', rank: '英雄', method: '', pvp: '1', pve: '4', upgraded: true },
+                    { name: '快速射擊:士兵', rank: '英雄', method: '限時180W', pvp: '2', pve: '1' },
+                    { name: '格勒西亞人護盾', rank: '英雄', method: '限時180W', pvp: '3', pve: '5' },
+                    { name: '破壞射擊:屏障', rank: '傳說', method: '2,000,000', pvp: '2', pve: '買' },
+                    { name: '衝刺:步兵', rank: '傳說', method: '2,000,000', pvp: '買', pve: '2' },
+                    { name: '魔力射擊:暈眩', rank: '傳說', method: '限時300W(I)', pvp: '1', pve: '3', upgraded: true },
+                    { name: '破壞射擊:反屏', rank: '傳說', method: '限時300W(II)', pvp: '3', pve: '5', upgraded: true },
+                    { name: '緊急救護', rank: '傳說', method: '限時300W(I)', pvp: '4', pve: '1', upgraded: true },
+                    { name: '清除射擊', rank: '傳說', method: '', pvp: '5', pve: '4' },
+                    { name: '準備開火', rank: '傳說', method: '限時300W(II)', pvp: '買', pve: '買' },
+                    { name: '天外救星', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫' },
+                    { name: '絕對零度', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
+                ],
+                thunderer: [
+                    { name: '雷霆防護', rank: '英雄', method: '700,000', pvp: '5', pve: '2', upgraded: true },
+                    { name: '雷電盔甲(神秘)', rank: '英雄', method: '700,000', pvp: '買', pve: '買' },
+                    { name: '雷電一閃', rank: '英雄', method: '1,000,000', pvp: '6', pve: '4' },
+                    { name: '落雷(神秘)', rank: '英雄', method: '', pvp: '4', pve: '5', upgraded: true },
+                    { name: '閃電攻擊(神秘)', rank: '英雄', method: '限時180W', pvp: '3', pve: '6', upgraded: true },
+                    { name: '鎖鏈閃光(神秘)', rank: '英雄', method: '限時180W', pvp: '1', pve: '1', upgraded: true },
+                    { name: '超載充能', rank: '英雄', method: '限時180W', pvp: '2', pve: '3' },
+                    { name: '閃雷標記(神秘)', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X' },
+                    { name: '迅雷閃擊', rank: '英雄', method: '1,000,000', pvp: '依需求學習', pve: '依需求學習' },
+                    { name: '女武神', rank: '傳說', method: '2,000,000', pvp: 'V', pve: 'V' },
+                    { name: '雷霆昏迷(神秘)', rank: '傳說', method: '', pvp: 'V', pve: 'V', upgraded: true },
+                    { name: '雷電盔甲(奧術)', rank: '傳說', method: '限時300W(I)', pvp: 'V', pve: 'V', upgraded: true },
+                    { name: '等離子電場', rank: '傳說', method: '限時300W(II)', pvp: 'V', pve: 'V(最後考量)', upgraded: true },
+                    { name: '雷霆防護(神秘)', rank: '傳說', method: '限時300W(II)', pvp: '買/轉職X', pve: '買/轉職X' },
+                    { name: '超載充能(神秘)', rank: '傳說', method: '限時300W(I)', pvp: 'V', pve: 'V' },
+                    { name: '雷電一閃(神秘)', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫' },
+                    { name: '極限驅動', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
+                ],
+                darkknight: [
+                    { name: '黑手', rank: '英雄', method: '', pvp: '3', pve: '(2)', upgraded: true },
+                    { name: '黑暗之劍(復仇者)', rank: '英雄', method: '', pvp: '4', pve: '3', upgraded: true },
+                    { name: '無效區域', rank: '英雄', method: '限時180W', pvp: '買', pve: '6' },
+                    { name: '暗黑之眼', rank: '英雄', method: '', pvp: '6', pve: '' },
+                    { name: '復仇屏障', rank: '英雄', method: '700,000', pvp: '買', pve: '買' },
+                    { name: '暗黑不死', rank: '英雄', method: '限時180W', pvp: '2', pve: '5', upgraded: true },
+                    { name: '暗黑之魂(復仇者)', rank: '英雄', method: '限時180W', pvp: '1', pve: '1', upgraded: true },
+                    { name: '幽冥防護', rank: '英雄', method: '限時180W', pvp: '5', pve: '4' },
+                    { name: '暗黑浪潮', rank: '英雄', method: '1,000,000', pvp: '買', pve: '2/(買)' },
+                    { name: '幻覺', rank: '傳說', method: '限時300W(I)', pvp: '2', pve: '5', upgraded: true },
+                    { name: '黑暗騎士(復仇者)', rank: '傳說', method: '2,000,000', pvp: '買', pve: '1' },
+                    { name: '黑暗之鏡(復仇者)', rank: '傳說', method: '限時300W(II)', pvp: '4', pve: '' },
+                    { name: '變形怪王', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫' },
+                    { name: '黑暗次元', rank: '傳說', method: '', pvp: '3', pve: '2', upgraded: true },
+                    { name: '暗黑之暈(復仇者)', rank: '傳說', method: '', pvp: '1', pve: '4', upgraded: true },
+                    { name: '復仇屏障(復仇者)', rank: '傳說', method: '限時300W(II)', pvp: '5', pve: '3' },
+                    { name: '無效區域(復仇者)', rank: '傳說', method: '限時300W(I)', pvp: '買/轉職X', pve: '買/轉職X' },
+                    { name: '次元之刃', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
+                ],
+                berserker: [
+                    { name: '體能強化:上升', rank: '英雄', method: '160,000', pvp: '買', pve: '買', upgraded: true },
+                    { name: '重擊', rank: '英雄', method: '', pvp: '6', pve: '6', upgraded: true },
+                    { name: '力量突破', rank: '英雄', method: '1,000,000', pvp: '4', pve: '4', upgraded: true },
+                    { name: '狂戰士', rank: '英雄', method: '限時180W', pvp: '5', pve: '5', upgraded: true },
+                    { name: '佔據', rank: '英雄', method: '', pvp: '3', pve: '3' },
+                    { name: '泰坦:岩石', rank: '英雄', method: '700,000', pvp: '買', pve: '買' },
+                    { name: '泰坦:魔法', rank: '英雄', method: '限時180W', pvp: '1', pve: '1' },
+                    { name: '泰坦:子彈', rank: '英雄', method: '限時180W', pvp: '2', pve: '2' },
+                    { name: '印地安戰斧', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X' },
+                    { name: '致命衝擊', rank: '傳說', method: '', pvp: '', pve: '', upgraded: true },
+                    { name: '佔據:上升', rank: '傳說', method: '2,000,000', pvp: '', pve: '2', upgraded: true },
+                    { name: '亡命之徒:上升', rank: '傳說', method: '限時300W(II)', pvp: '', pve: '', upgraded: true },
+                    { name: '亡命之徒', rank: '傳說', method: '限時300W(I)', pvp: '', pve: '' },
+                    { name: '蓋亞', rank: '傳說', method: '', pvp: '', pve: '1' },
+                    { name: '泰坦:上升', rank: '傳說', method: '限時300W(I)', pvp: '', pve: '' },
+                    { name: '狂戰士:上升', rank: '傳說', method: '限時300W(II)', pvp: '買/轉職X', pve: '買/轉職X' },
+                    { name: '燃燒之心', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫' },
+                    { name: '海力克斯', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
+                ]
+            };
+
+            const getAllClasses = () => {
+                return classesConfig.map(config => {
+                    const skills = salesData[config.id];
+                    if (!skills) return null;
+                    return {
+                        ...config,
+                        skills
+                    };
+                }).filter(Boolean);
+            };
+
+            const renderMethod = (method) => {
+                if (!method) return '-';
+                
+                if (method.includes('商城紫')) {
+                    return (
+                        <span className="inline-block px-2.5 py-1 rounded-md bg-purple-100 text-purple-700 font-bold border border-purple-200 text-sm shadow-sm whitespace-nowrap">
+                            {method}
+                        </span>
+                    );
+                }
+                
+                if (method.includes('限時300W')) {
+                    return (
+                        <span className="inline-block px-2.5 py-1 rounded-md bg-fuchsia-50 text-fuchsia-700 font-bold border border-fuchsia-100 text-sm shadow-sm whitespace-nowrap">
+                            {method}
+                        </span>
+                    );
+                }
+
+                if (method.includes('限時180W')) {
+                    return (
+                        <span className="inline-block px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 font-bold border border-amber-100 text-sm shadow-sm whitespace-nowrap">
+                            {method}
+                        </span>
+                    );
+                }
+
+                return <span className="text-slate-600">{method}</span>;
+            };
+
+            const renderTransferTable = (classId) => {
+                const data = transferData[classId];
+                if (!data) return <div className="text-center p-4 text-slate-400">尚無資料</div>;
+
+                const classConfig = classesConfig.find(c => c.id === classId);
+
+                return (
+                    <div className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
+                        <div className={`p-4 border-b border-slate-100 flex items-center gap-3 bg-gradient-to-r ${classConfig.lightGradient}`}>
+                            <div className={`p-1.5 rounded-lg ${classConfig.badgeColor}`}>
+                                <ArrowRightLeft className="w-5 h-5" />
+                            </div>
+                            <h3 className={`text-xl font-bold ${classConfig.color}`}>轉職技能建議表</h3>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-base text-left text-slate-700">
+                                <thead className="text-sm font-semibold text-slate-600 bg-slate-50 border-b border-slate-200">
+                                    <tr>
+                                        <th className="px-6 py-3 min-w-[200px]">技能名稱</th>
+                                        <th className="px-6 py-3">階級</th>
+                                        <th className="px-6 py-3">取得方式</th>
+                                        <th className="px-6 py-3 text-center">PVP取向</th>
+                                        <th className="px-6 py-3 text-center">PVE取向</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-100">
+                                    {data.map((row, index) => {
+                                        const rankColor = row.rank === '英雄' ? 'text-red-600' : 
+                                                        row.rank === '傳說' ? 'text-purple-600' : 'text-slate-900';
+                                        
+                                        return (
+                                            <tr key={index} className="hover:bg-slate-50 transition-colors">
+                                                <td className={`px-6 py-3 font-bold ${rankColor} flex items-center gap-2`}>
+                                                    {row.name}
+                                                    {row.upgraded && (
+                                                        <ArrowUp className={`w-4 h-4 ${rankColor}`} strokeWidth={3} />
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-3">
+                                                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-sm ${
+                                                        row.rank === '英雄' ? 'bg-red-50 text-red-700 border-red-200' : 
+                                                        row.rank === '傳說' ? 'bg-purple-50 text-purple-700 border-purple-200' : 
+                                                        'bg-slate-100 text-slate-600 border-slate-200'
+                                                    }`}>
+                                                        {row.rank}
+                                                    </span>
+                                                </td>
+                                                <td className="px-6 py-3">
+                                                    {renderMethod(row.method)}
+                                                </td>
+                                                <td className="px-6 py-3 text-center text-slate-600 font-medium">{row.pvp || '-'}</td>
+                                                <td className="px-6 py-3 text-center text-slate-600 font-medium">{row.pve || '-'}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                );
+            };
+
+            const renderSalesCard = (classConfig) => {
+                const skills = salesData[classConfig.id];
+                return (
+                    <div className={`relative overflow-hidden rounded-xl border bg-white shadow-xl mb-8 ${classConfig.borderColor}`}>
+                        <div className={`h-3 w-full bg-gradient-to-r ${classConfig.gradient}`}></div>
+                        
+                        <div className="p-8">
+                            <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${classConfig.color}`}>
+                                <BookOpen className="w-7 h-7" />
+                                名譽幣技能書箱內容
+                            </h3>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
+                                    <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-200">
+                                        <span className="px-3 py-1 text-xs font-bold text-white bg-red-600 rounded shadow-md">英雄</span>
+                                        <span className="text-xs text-slate-400 font-medium tracking-wide">英雄技能</span>
+                                    </div>
+                                    <ul className="space-y-2">
+                                        {skills.hero.map((s, i) => <li key={i} className="text-base text-red-700 font-bold flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>{s}
+                                        </li>)}
+                                    </ul>
+                                </div>
+                                
+                                <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
+                                    <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-200">
+                                        <span className="px-3 py-1 text-xs font-bold text-white bg-purple-600 rounded shadow-md">傳說 I</span>
+                                        <span className="text-xs text-slate-400 font-medium tracking-wide">傳說一階</span>
+                                    </div>
+                                    <ul className="space-y-2">
+                                        {skills.legend1.map((s, i) => <li key={i} className="text-base text-purple-700 font-bold flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>{s}
+                                        </li>)}
+                                    </ul>
+                                </div>
+                                
+                                <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
+                                    <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-200">
+                                        <span className="px-3 py-1 text-xs font-bold text-white bg-fuchsia-600 rounded shadow-md">傳說 II</span>
+                                        <span className="text-xs text-slate-400 font-medium tracking-wide">傳說二階</span>
+                                    </div>
+                                    <ul className="space-y-2">
+                                        {skills.legend2.map((s, i) => <li key={i} className="text-base text-purple-700 font-bold flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-fuchsia-500"></span>{s}
+                                        </li>)}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-slate-50 text-slate-800 p-4 md:p-8 font-sans">
+                    <div className="max-w-7xl mx-auto px-4">
+                        
+                        <div className="text-center space-y-3 mb-8">
+                            <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-800">
+                                天堂M <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700">8周年改版轉職建議白皮書</span>
+                            </h1>
+                            <p className="text-slate-500 text-sm md:text-base font-bold tracking-widest uppercase">
+                                名譽幣限時技能與轉職技能建議
+                            </p>
+                        </div>
+
+                        <div className="text-center text-slate-500 text-base mb-6 font-bold tracking-wide">
+                            <span>製作/ </span>
+                            <a href="https://www.youtube.com/@bandonplay" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-800 transition-colors underline decoration-orange-300 underline-offset-4 decoration-2">
+                                編董不雷
+                            </a>
+                        </div>
+
+                        <div className="flex flex-wrap justify-center gap-2 mb-6 sticky top-4 z-10 bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-lg border border-slate-200/60 max-w-fit mx-auto ring-1 ring-slate-900/5">
+                            <button
+                                onClick={() => setActiveTab('home')}
+                                className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${
+                                    activeTab === 'home' 
+                                        ? 'bg-slate-800 text-white shadow-md' 
+                                        : 'bg-transparent text-slate-600 hover:bg-slate-100'
+                                }`}
+                            >
+                                <Home className="w-4 h-4" />
+                                首頁
+                            </button>
+                            
+                            <div className="w-px h-6 bg-slate-200 mx-1 self-center hidden md:block"></div>
+
+                            {classesConfig.map(cls => (
+                                <button
+                                    key={cls.id}
+                                    onClick={() => setActiveTab(cls.id)}
+                                    className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${
+                                        activeTab === cls.id 
+                                            ? `bg-gradient-to-r ${cls.gradient} text-white shadow-md` 
+                                            : `bg-transparent text-slate-600 hover:bg-slate-100`
+                                    }`}
+                                >
+                                    {cls.icon}
+                                    {cls.name}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
+                            <a 
+                                href="https://bandon1016.github.io/job-change-cost/" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
+                            >
+                                <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
+                                    <Calculator className="w-5 h-5" />
+                                </div>
+                                <span>轉職袋子需求計算機</span>
+                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-400 ml-1" />
+                            </a>
+                            
+                            <a 
+                                href="https://bandon1016.github.io/exp-calc/" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
+                            >
+                                <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
+                                    <Percent className="w-5 h-5" />
+                                </div>
+                                <span>經驗合併計算機</span>
+                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-400 ml-1" />
+                            </a>
+                        </div>
+
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            {activeTab === 'home' && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {getAllClasses().map((config) => (
+                                        <div 
+                                            key={config.id}
+                                            onClick={() => setActiveTab(config.id)}
+                                            className={`group cursor-pointer bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden ${config.hoverBorder}`}
+                                        >
+                                            <div className={`h-24 bg-gradient-to-br ${config.lightGradient} relative flex justify-center items-center border-b border-slate-100`}>
+                                                <div className={`p-3 bg-white rounded-xl shadow-md ${config.color} ring-1 ring-slate-900/5`}>
+                                                    {React.cloneElement(config.icon, { className: "w-8 h-8" })}
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="p-6 text-center">
+                                                <h2 className={`text-xl font-bold mb-4 ${config.color} tracking-wide`}>{config.name}</h2>
+                                                
+                                                <div className="flex justify-center gap-3 text-sm">
+                                                    <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[70px]">
+                                                        <span className="text-[10px] font-bold text-red-600 uppercase mb-0.5 tracking-wider">英雄</span>
+                                                        <span className="font-black text-lg leading-tight text-slate-800">{config.skills.hero.length}</span>
+                                                    </div>
+                                                    <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[70px]">
+                                                        <span className="text-[10px] font-bold text-purple-600 uppercase mb-0.5 tracking-wider">傳說</span>
+                                                        <span className="font-black text-lg leading-tight text-slate-800">{config.skills.legend1.length + config.skills.legend2.length}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-center gap-1 text-slate-400 text-xs font-bold group-hover:text-slate-800 transition-colors uppercase tracking-widest">
+                                                    查看詳情 <ChevronRight className="w-3 h-3" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {activeTab !== 'home' && (
+                                <div className="max-w-5xl mx-auto">
+                                    {classesConfig.filter(c => c.id === activeTab).map(config => (
+                                        <div key={config.id}>
+                                            <div className="flex items-center gap-5 mb-8 pl-1">
+                                                <div className={`p-3.5 rounded-xl bg-gradient-to-br ${config.gradient} shadow-lg ring-4 ring-white`}>
+                                                    {React.cloneElement(config.icon, { className: "w-8 h-8 text-white" })}
+                                                </div>
+                                                <div>
+                                                    <h2 className="text-3xl font-black text-slate-800 tracking-tight">{config.name} 完整資訊</h2>
+                                                    <p className={`text-sm font-bold ${config.color} opacity-80 uppercase tracking-wider`}>職業資料庫</p>
+                                                </div>
+                                            </div>
+
+                                            {renderSalesCard(config)}
+                                            {renderTransferTable(config.id)}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<SkillInfoApp />);
+    </script>
+</body>
+</html>
