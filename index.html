@@ -20,7 +20,7 @@
     </style>
 </head>
 
-<!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS3MLPQBVB"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -200,15 +200,15 @@
                 { name: '絕對零度', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
             ],
             thunderer: [
-                { name: '雷霆防護', rank: '英雄', method: '700,000', pvp: '5', pve: '2', upgraded: true },
+                { name: '雷霆防護', rank: '英雄', method: '700,000', pvp: '1', pve: '1', upgraded: true },
                 { name: '雷電盔甲(神秘)', rank: '英雄', method: '700,000', pvp: '買', pve: '買' },
-                { name: '雷電一閃', rank: '英雄', method: '1,000,000', pvp: '6', pve: '4' },
-                { name: '落雷(神秘)', rank: '英雄', method: '', pvp: '4', pve: '5', upgraded: true },
-                { name: '閃電攻擊(神秘)', rank: '英雄', method: '限時180W', pvp: '3', pve: '6', upgraded: true },
-                { name: '鎖鏈閃光(神秘)', rank: '英雄', method: '限時180W', pvp: '1', pve: '1', upgraded: true },
-                { name: '超載充能', rank: '英雄', method: '限時180W', pvp: '2', pve: '3' },
+                { name: '雷電一閃', rank: '英雄', method: '1,000,000', pvp: '買', pve: '買' },
+                { name: '落雷(神秘)', rank: '英雄', method: '', pvp: '2', pve: '2', upgraded: true },
+                { name: '閃電攻擊(神秘)', rank: '英雄', method: '限時180W', pvp: '3', pve: '3', upgraded: true },
+                { name: '鎖鏈閃光(神秘)', rank: '英雄', method: '限時180W', pvp: '4', pve: '4', upgraded: true },
+                { name: '超載充能', rank: '英雄', method: '限時180W', pvp: '5', pve: '6' },
                 { name: '閃雷標記(神秘)', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X' },
-                { name: '迅雷閃擊', rank: '英雄', method: '1,000,000', pvp: '依需求學習', pve: '依需求學習' },
+                { name: '迅雷閃擊', rank: '英雄', method: '1,000,000', pvp: '6', pve: '5' },
                 { name: '女武神', rank: '傳說', method: '2,000,000', pvp: 'V', pve: 'V' },
                 { name: '雷霆昏迷(神秘)', rank: '傳說', method: '', pvp: 'V', pve: 'V', upgraded: true },
                 { name: '雷電盔甲(奧術)', rank: '傳說', method: '限時300W(I)', pvp: 'V', pve: 'V', upgraded: true },
@@ -408,14 +408,29 @@
                 }
             };
 
-            // 重置功能 (現在會重置為全部取消選取，讓使用者重新規劃)
-            // 註：如果想要「重置回預設狀態(LV)」，可以將 setSelections 設為 getInitialSelections()
-            // 目前維持「清空」邏輯，因為這在重新試算時比較直覺
+            // 重置功能 (改為重置回預設狀態(LV))
             const handleResetSelections = (classId) => {
-                if (confirm('確定要重置此職業的所有勾選技能嗎？')) {
+                if (confirm('確定要將此職業的技能勾選重置為預設建議狀態嗎？')) {
+                    
+                    // 重新計算該職業的預設值
+                    const defaultHero = [];
+                    const defaultLegend = [];
+
+                    if (transferData[classId]) {
+                        transferData[classId].forEach(skill => {
+                            if (skill.upgraded) {
+                                if (skill.rank === '英雄') {
+                                    defaultHero.push(skill.name);
+                                } else if (skill.rank === '傳說') {
+                                    defaultLegend.push(skill.name);
+                                }
+                            }
+                        });
+                    }
+
                     setSelections(prev => ({
                         ...prev,
-                        [classId]: { hero: [], legend: [] }
+                        [classId]: { hero: defaultHero, legend: defaultLegend }
                     }));
                 }
             };
@@ -499,7 +514,7 @@
                                     onClick={() => handleResetSelections(classId)}
                                     className="text-xs flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors"
                                 >
-                                    <RotateCcw className="w-3 h-3" /> 重置選取
+                                    <RotateCcw className="w-3 h-3" /> 重置回預設
                                 </button>
                             </div>
                         </div>
@@ -781,4 +796,3 @@
     </script>
 </body>
 </html>
-
