@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天堂M 8周年改版轉職建議白皮書</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
+
     <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+        }
     </style>
 </head>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS3MLPQBVB"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-BS3MLPQBVB');
+    gtag('config', 'G-BS3MLPQBVB');
 </script>
 
 <body>
@@ -39,16 +43,16 @@
         // --- 內嵌圖示元件 ---
 
         const Icon = ({ children, className = "", ...props }) => (
-            <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="24" 
-                height="24" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className={className}
                 {...props}
             >
@@ -191,7 +195,7 @@
                 { name: '破壞射擊', rank: '英雄', method: '', pvp: '5', pve: '3', upgraded: true },
                 { name: '神射手', rank: '英雄', method: '', pvp: '4', pve: '2', upgraded: true },
                 { name: '防禦提升:步兵', rank: '英雄', method: '', pvp: '1', pve: '4', upgraded: true },
-                { name: '魔力射擊:恐懼', rank: '英雄', method: '限時180W', pvp: '買', pve: '' },
+                { name: '魔力射擊:恐怖', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X' },
                 { name: '魔力射擊:相消', rank: '英雄', method: '', pvp: '交易所/轉卡', pve: '' },
                 { name: '衝刺', rank: '英雄', method: '160,000', pvp: '買', pve: '買' },
                 { name: '死亡狙擊', rank: '英雄', method: '1,000,000', pvp: '交易所', pve: '買' },
@@ -202,11 +206,11 @@
                 // 傳說技能 (LV優先)
                 { name: '魔力射擊:暈眩', rank: '傳說', method: '限時300W(I)', pvp: '1', pve: '3', upgraded: true },
                 { name: '破壞射擊:反屏', rank: '傳說', method: '限時300W(II)', pvp: '3', pve: '5', upgraded: true },
-                { name: '緊急救護', rank: '傳說', method: '限時300W(I)', pvp: '4', pve: '1', upgraded: true },
-                { name: '破壞射擊:屏障', rank: '傳說', method: '2,000,000', pvp: '2', pve: '買' },
-                { name: '衝刺:步兵', rank: '傳說', method: '2,000,000', pvp: '買', pve: '2' },
-                { name: '清除射擊', rank: '傳說', method: '', pvp: '5', pve: '4' },
-                { name: '準備開火', rank: '傳說', method: '限時300W(II)', pvp: '買', pve: '買' },
+                { name: '緊急治療', rank: '傳說', method: '限時300W(I)', pvp: '4', pve: '1', upgraded: true },
+                { name: '破壞射擊:絕屏', rank: '傳說', method: '2,000,000', pvp: '2', pve: '買' },
+                { name: '衝刺:士兵', rank: '傳說', method: '2,000,000', pvp: '買/轉職X', pve: '買/轉職X' },
+                { name: '智能射擊', rank: '傳說', method: '', pvp: '5', pve: '4' },
+                { name: '準備開火', rank: '傳說', method: '限時300W(II)', pvp: '買/轉職X', pve: '買/轉職X' },
                 { name: '天外救星', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫' },
                 { name: '絕對零度', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
             ],
@@ -217,7 +221,7 @@
                 { name: '閃電攻擊(神秘)', rank: '英雄', method: '限時180W', pvp: '3', pve: '3', upgraded: true },
                 { name: '鎖鏈閃光(神秘)', rank: '英雄', method: '限時180W', pvp: '4', pve: '4', upgraded: true },
                 { name: '雷電盔甲(神秘)', rank: '英雄', method: '700,000', pvp: '買', pve: '買' },
-                { name: '雷電一閃', rank: '英雄', method: '1,000,000', pvp: '買', pve: '買' },
+                { name: '雷電一閃', rank: '英雄', method: '1,000,000', pvp: '買', pve: '5' },
                 { name: '超載充能', rank: '英雄', method: '限時180W', pvp: '5', pve: '6' },
                 { name: '閃雷標記(神秘)', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X' },
                 { name: '迅雷閃擊', rank: '英雄', method: '1,000,000', pvp: '依需求學習', pve: '依需求學習' },
@@ -233,7 +237,7 @@
             ],
             darkknight: [
                 // 英雄技能 (LV優先)
-                { name: '黑手', rank: '英雄', method: '', pvp: '3', pve: '(2)', upgraded: true },
+                { name: '黑手', rank: '英雄', method: '', pvp: '3', pve: '視技能等級狀況', upgraded: true },
                 { name: '黑暗之劍(復仇者)', rank: '英雄', method: '', pvp: '4', pve: '3', upgraded: true },
                 { name: '暗黑不死', rank: '英雄', method: '限時180W', pvp: '2', pve: '5', upgraded: true },
                 { name: '暗黑之魂(復仇者)', rank: '英雄', method: '限時180W', pvp: '1', pve: '1', upgraded: true },
@@ -265,12 +269,12 @@
                 { name: '泰坦:子彈', rank: '英雄', method: '限時180W', pvp: '2', pve: '2' },
                 { name: '印地安戰斧', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X' },
                 // 傳說技能 (LV優先)
-                { name: '致命衝擊', rank: '傳說', method: '', pvp: '', pve: '', upgraded: true },
-                { name: '佔據:上升', rank: '傳說', method: '2,000,000', pvp: '', pve: '2', upgraded: true },
-                { name: '亡命之徒:上升', rank: '傳說', method: '限時300W(II)', pvp: '', pve: '', upgraded: true },
-                { name: '亡命之徒', rank: '傳說', method: '限時300W(I)', pvp: '', pve: '' },
-                { name: '蓋亞', rank: '傳說', method: '', pvp: '', pve: '1' },
-                { name: '泰坦:上升', rank: '傳說', method: '限時300W(I)', pvp: '', pve: '' },
+                { name: '致命粉碎', rank: '傳說', method: '', pvp: '1', pve: '1', upgraded: true },
+                { name: '佔據:上升', rank: '傳說', method: '2,000,000', pvp: '買(視技能等級取捨)', pve: '4', upgraded: true },
+                { name: '亡命之徒:上升', rank: '傳說', method: '限時300W(II)', pvp: '2', pve: '-', upgraded: true },
+                { name: '亡命之徒', rank: '傳說', method: '限時300W(I)', pvp: '3', pve: '-' },
+                { name: '蓋亞', rank: '傳說', method: '', pvp: '4', pve: '3' },
+                { name: '泰坦:上升', rank: '傳說', method: '限時300W(I)', pvp: '5', pve: '2' },
                 { name: '狂戰士:上升', rank: '傳說', method: '限時300W(II)', pvp: '買/轉職X', pve: '買/轉職X' },
                 { name: '燃燒之心', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫' },
                 { name: '海力克斯', rank: '傳說', method: '8,000,000', pvp: '買', pve: '買' },
@@ -280,11 +284,11 @@
         const salesData = {
             gunner: {
                 hero: ['充能射擊', '快速射擊(士兵)', '格勒西亞人護盾', '魔法射擊:恐怖'],
-                legend1: ['魔法射擊:衝暈', '緊急照護'],
+                legend1: ['魔法射擊:衝暈', '緊急治療'],
                 legend2: ['準備開火', '破壞射擊:反屏']
             },
             thunderer: {
-                hero: ['閃雷標記:神秘', '超載充能', '鎖鏈閃光:神秘', '閃電攻擊:神秘'], 
+                hero: ['閃雷標記:神秘', '超載充能', '鎖鏈閃光:神秘', '閃電攻擊:神秘'],
                 legend1: ['雷電盔甲:奧術', '超載充能:神秘'],
                 legend2: ['雷霆防護:神秘', '等離子電場']
             },
@@ -295,8 +299,8 @@
             },
             darkknight: {
                 hero: ['無效區域', '暗黑不死', '暗黑之魂:復仇者', '幽冥防護'],
-                legend1: ['幻覺', '無效區域:復仇者'], 
-                legend2: ['黑暗之鏡:復仇者', '復仇屏障:復仇者'] 
+                legend1: ['幻覺', '無效區域:復仇者'],
+                legend2: ['黑暗之鏡:復仇者', '復仇屏障:復仇者']
             }
         };
 
@@ -359,7 +363,7 @@
 
         const SkillInfoApp = () => {
             const [activeTab, setActiveTab] = useState('home');
-            
+
             // 根據 upgraded 屬性計算初始選擇狀態
             const getInitialSelections = () => {
                 const initial = {
@@ -393,11 +397,11 @@
                 let rankKey = null;
                 if (rank === '英雄') rankKey = 'hero';
                 else if (rank === '傳說') rankKey = 'legend';
-                else return; 
+                else return;
 
                 const currentClassSelections = selections[classId];
                 const currentList = currentClassSelections[rankKey];
-                
+
                 const isSelected = currentList.includes(skillName);
 
                 if (isSelected) {
@@ -425,10 +429,56 @@
                 }
             };
 
+            // 記錄各職業當前選擇的取向 (pvp/pve/null)
+            const [orientations, setOrientations] = useState({
+                darkknight: null,
+                thunderer: null,
+                berserker: null,
+                gunner: null
+            });
+
+            const handleToggleOrientation = (classId, type) => {
+                const current = orientations[classId];
+                const newOrientation = current === type ? null : type;
+
+                setOrientations(prev => ({ ...prev, [classId]: newOrientation }));
+
+                if (newOrientation) {
+                    const data = transferData[classId];
+                    const getVal = (skill) => skill[type === 'pvp' ? 'pvp' : 'pve'];
+                    const getPriority = (val) => {
+                        if (!val) return 999;
+                        if (val === 'V') return 0;
+                        const match = val.match(/\d+/);
+                        // 如果有括號數字如 (2)，也視為 2
+                        return match ? parseInt(match[0], 10) : 999;
+                    };
+
+                    const heroSkills = data.filter(d => d.rank === '英雄')
+                        .map(s => ({ ...s, p: getPriority(getVal(s)) }))
+                        .filter(s => s.p < 999)
+                        .sort((a, b) => a.p - b.p)
+                        .slice(0, 6)
+                        .map(s => s.name);
+
+                    const legendSkills = data.filter(d => d.rank === '傳說')
+                        .map(s => ({ ...s, p: getPriority(getVal(s)) }))
+                        .filter(s => s.p < 999)
+                        .sort((a, b) => a.p - b.p)
+                        .slice(0, 5)
+                        .map(s => s.name);
+
+                    setSelections(prev => ({
+                        ...prev,
+                        [classId]: { hero: heroSkills, legend: legendSkills }
+                    }));
+                }
+            };
+
             // 重置功能 (改為重置回預設狀態(LV))
             const handleResetSelections = (classId) => {
                 if (confirm('確定要將此職業的技能勾選重置為預設建議狀態嗎？')) {
-                    
+
                     // 重新計算該職業的預設值
                     const defaultHero = [];
                     const defaultLegend = [];
@@ -465,7 +515,7 @@
 
             const renderMethod = (method) => {
                 if (!method) return '-';
-                
+
                 if (method.includes('商城紫')) {
                     return (
                         <span className="inline-block px-2.5 py-1 rounded-md bg-purple-100 text-purple-700 font-bold border border-purple-200 text-sm shadow-sm whitespace-nowrap">
@@ -473,7 +523,7 @@
                         </span>
                     );
                 }
-                
+
                 if (method.includes('限時300W')) {
                     return (
                         <span className="inline-block px-2.5 py-1 rounded-md bg-fuchsia-50 text-fuchsia-700 font-bold border border-fuchsia-100 text-sm shadow-sm whitespace-nowrap">
@@ -493,6 +543,21 @@
                 return <span className="text-slate-600">{method}</span>;
             };
 
+            const parseMethodToCoins = (method) => {
+                if (!method) return 0;
+                if (method.includes('商城紫')) return 0;
+                if (method.includes('180W')) return 1800000;
+                if (method.includes('300W')) return 3000000;
+                // Remove commas and parse as integer
+                const cleanStr = method.replace(/,/g, '');
+                const num = parseInt(cleanStr, 10);
+                return isNaN(num) ? 0 : num;
+            };
+
+            const formatNumber = (num) => {
+                return num.toLocaleString();
+            };
+
             const renderTransferTable = (classId) => {
                 const data = transferData[classId];
                 if (!data) return <div className="text-center p-4 text-slate-400">尚無資料</div>;
@@ -508,18 +573,23 @@
                 const legendSkills = data.filter(d => d.rank === '傳說');
 
                 const renderSkillRow = (row) => {
-                    const rankColor = row.rank === '英雄' ? 'text-red-600' : 
-                                      row.rank === '傳說' ? 'text-purple-600' : 'text-slate-900';
-                    
+                    const rankColor = row.rank === '英雄' ? 'text-red-600' :
+                        row.rank === '傳說' ? 'text-purple-600' : 'text-slate-900';
+
                     const selectionList = row.rank === '英雄' ? currentSelections.hero : currentSelections.legend;
                     const isSelected = selectionList.includes(row.name);
-                    
+
                     // 計算選擇順序：如果被選中，找出它在陣列中的索引位置 + 1
                     const selectionOrder = isSelected ? selectionList.indexOf(row.name) + 1 : null;
+
+                    // 檢查是否標示為轉職X
+                    const isTransferDisabled = (row.pvp && row.pvp.includes('轉職X')) || (row.pve && row.pve.includes('轉職X'));
 
                     let rowBgClass = '';
                     if (isSelected) {
                         rowBgClass = 'bg-slate-300';
+                    } else if (isTransferDisabled) {
+                        rowBgClass = 'bg-slate-100 opacity-60'; // 轉職X的背景色
                     } else {
                         if (row.rank === '英雄') {
                             rowBgClass = 'bg-red-50/20 hover:bg-red-100/50';
@@ -531,18 +601,20 @@
                     }
 
                     return (
-                        <tr 
-                            key={row.name} 
-                            className={`transition-colors cursor-pointer ${rowBgClass}`}
-                            onClick={() => handleToggleSkill(classId, row.name, row.rank)}
+                        <tr
+                            key={row.name}
+                            className={`transition-colors ${isTransferDisabled ? 'cursor-default' : 'cursor-pointer'} ${rowBgClass}`}
+                            onClick={() => !isTransferDisabled && handleToggleSkill(classId, row.name, row.rank)}
                         >
                             <td className="px-6 py-3 w-[60px] text-center" onClick={(e) => e.stopPropagation()}>
-                                <input 
-                                    type="checkbox" 
-                                    className="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer"
-                                    checked={isSelected}
-                                    onChange={() => handleToggleSkill(classId, row.name, row.rank)}
-                                />
+                                {!isTransferDisabled && (
+                                    <input
+                                        type="checkbox"
+                                        className="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 cursor-pointer"
+                                        checked={isSelected}
+                                        onChange={() => handleToggleSkill(classId, row.name, row.rank)}
+                                    />
+                                )}
                             </td>
                             {/* 新增順序顯示欄位 */}
                             <td className="px-6 py-3 w-[60px] text-center">
@@ -552,26 +624,29 @@
                                     </span>
                                 )}
                             </td>
-                            <td className={`px-6 py-3 font-bold ${rankColor} flex items-center gap-2`}>
+                            <td className={`px-6 py-3 font-bold ${rankColor} flex items-center gap-2 ${isTransferDisabled ? 'opacity-50' : ''}`}>
                                 {row.name}
                                 {row.upgraded && (
                                     <ArrowUp className={`w-4 h-4 ${rankColor}`} strokeWidth={3} />
                                 )}
                             </td>
                             <td className="px-6 py-3">
-                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-sm ${
-                                    row.rank === '英雄' ? 'bg-red-50 text-red-700 border-red-200' : 
-                                    row.rank === '傳說' ? 'bg-purple-50 text-purple-700 border-purple-200' : 
-                                    'bg-slate-100 text-slate-600 border-slate-200'
-                                }`}>
+                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-sm ${row.rank === '英雄' ? 'bg-red-50 text-red-700 border-red-200' :
+                                    row.rank === '傳說' ? 'bg-purple-50 text-purple-700 border-purple-200' :
+                                        'bg-slate-100 text-slate-600 border-slate-200'
+                                    }`}>
                                     {row.rank}
                                 </span>
                             </td>
                             <td className="px-6 py-3">
                                 {renderMethod(row.method)}
                             </td>
-                            <td className="px-6 py-3 text-center text-slate-600 font-medium">{row.pvp || '-'}</td>
-                            <td className="px-6 py-3 text-center text-slate-600 font-medium">{row.pve || '-'}</td>
+                            <td className={`px-6 py-3 text-center transition-opacity ${orientations[classId] === 'pve' ? 'opacity-30' : 'font-medium text-slate-600'}`}>
+                                {row.pvp || '-'}
+                            </td>
+                            <td className={`px-6 py-3 text-center transition-opacity ${orientations[classId] === 'pvp' ? 'opacity-30' : 'font-medium text-slate-600'}`}>
+                                {row.pve || '-'}
+                            </td>
                         </tr>
                     );
                 };
@@ -585,11 +660,11 @@
                                         <ArrowRightLeft className="w-5 h-5" />
                                     </div>
                                     <h3 className={`text-xl font-bold ${classConfig.color}`}>轉職技能建議表</h3>
-                                    
+
                                     {/* Video Link */}
-                                    <a 
-                                        href={classConfig.videoUrl} 
-                                        target="_blank" 
+                                    <a
+                                        href={classConfig.videoUrl}
+                                        target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-1 text-sm font-bold text-red-500 hover:text-red-700 transition-colors ml-2 bg-white px-2 py-0.5 rounded-md border border-red-100 shadow-sm"
                                     >
@@ -599,7 +674,7 @@
                                 </div>
                                 <p className="text-xs text-slate-500 ml-1">※ 可勾選下方技能進行試算</p>
                             </div>
-                            
+
                             <div className="flex flex-col items-end gap-2">
                                 <div className="flex gap-4 text-sm font-bold">
                                     <div className={`flex items-center gap-1 ${heroCount >= 6 ? 'text-red-600' : 'text-slate-500'}`}>
@@ -611,7 +686,7 @@
                                         傳說: {legendCount}/5
                                     </div>
                                 </div>
-                                <button 
+                                <button
                                     onClick={() => handleResetSelections(classId)}
                                     className="text-xs flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors"
                                 >
@@ -628,8 +703,34 @@
                                         <th className="px-6 py-3 min-w-[200px]">技能名稱</th>
                                         <th className="px-6 py-3">階級</th>
                                         <th className="px-6 py-3">取得方式</th>
-                                        <th className="px-6 py-3 text-center">PVP取向</th>
-                                        <th className="px-6 py-3 text-center">PVE取向</th>
+                                        <th className="px-6 py-3 text-center relative group">
+                                            <div
+                                                className={`flex items-center justify-center gap-2 cursor-pointer p-1 rounded transition-colors ${orientations[classId] === 'pvp' ? 'bg-indigo-100 text-indigo-700' : 'hover:bg-slate-100'}`}
+                                                onClick={() => handleToggleOrientation(classId, 'pvp')}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={orientations[classId] === 'pvp'}
+                                                    onChange={() => { }}
+                                                    className="w-4 h-4 rounded text-indigo-600"
+                                                />
+                                                <span>PVP取向</span>
+                                            </div>
+                                        </th>
+                                        <th className="px-6 py-3 text-center relative group">
+                                            <div
+                                                className={`flex items-center justify-center gap-2 cursor-pointer p-1 rounded transition-colors ${orientations[classId] === 'pve' ? 'bg-indigo-100 text-indigo-700' : 'hover:bg-slate-100'}`}
+                                                onClick={() => handleToggleOrientation(classId, 'pve')}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={orientations[classId] === 'pve'}
+                                                    onChange={() => { }}
+                                                    className="w-4 h-4 rounded text-indigo-600"
+                                                />
+                                                <span>PVE取向</span>
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-slate-100">
@@ -640,6 +741,20 @@
                                         </td>
                                     </tr>
                                     {heroSkills.map(renderSkillRow)}
+                                    <tr className="bg-slate-50 border-t border-slate-200">
+                                        <td colSpan="7" className="px-6 py-4">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-2 text-slate-800 font-black text-lg">
+                                                    <div className="p-1 px-2 bg-indigo-600 text-white rounded text-sm font-bold">小計</div>
+                                                    距離滿技能，您還要準備 <span className="text-blue-700 text-2xl mx-1">{formatNumber(heroSkills.reduce((acc, row) => !selections[classId].hero.includes(row.name) ? acc + parseMethodToCoins(row.method) : acc, 0))}</span> 名譽幣
+                                                </div>
+                                                <div className="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 flex items-center gap-2">
+                                                    <Info className="w-4 h-4 text-indigo-400" />
+                                                    限時180W技能每次改版僅能選2個。
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                     {/* Legend Section */}
                                     <tr className="bg-purple-50/50 border-t-4 border-slate-100">
@@ -648,6 +763,20 @@
                                         </td>
                                     </tr>
                                     {legendSkills.map(renderSkillRow)}
+                                    <tr className="bg-slate-50 border-t border-slate-200">
+                                        <td colSpan="7" className="px-6 py-4">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                                <div className="flex items-center gap-2 text-slate-800 font-black text-lg">
+                                                    <div className="p-1 px-2 bg-indigo-600 text-white rounded text-sm font-bold">小計</div>
+                                                    距離滿技能，您還要準備 <span className="text-purple-700 text-2xl mx-1">{formatNumber(legendSkills.reduce((acc, row) => !selections[classId].legend.includes(row.name) ? acc + parseMethodToCoins(row.method) : acc, 0))}</span> 名譽幣
+                                                </div>
+                                                <div className="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 flex items-center gap-2">
+                                                    <Info className="w-4 h-4 text-indigo-400" />
+                                                    限時300W技能需先買完 (I) 才可買 (II)。
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -660,13 +789,13 @@
                 return (
                     <div className={`relative overflow-hidden rounded-xl border bg-white shadow-xl mb-8 ${classConfig.borderColor}`}>
                         <div className={`h-3 w-full bg-gradient-to-r ${classConfig.gradient}`}></div>
-                        
+
                         <div className="p-8">
                             <h3 className={`text-2xl font-bold mb-6 flex items-center gap-3 ${classConfig.color}`}>
                                 <BookOpen className="w-7 h-7" />
                                 名譽幣技能書箱內容
                             </h3>
-                            
+
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                 <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
                                     <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-200">
@@ -679,7 +808,7 @@
                                         </li>)}
                                     </ul>
                                 </div>
-                                
+
                                 <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
                                     <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-200">
                                         <span className="px-3 py-1 text-xs font-bold text-white bg-purple-600 rounded shadow-md">傳說 I</span>
@@ -691,7 +820,7 @@
                                         </li>)}
                                     </ul>
                                 </div>
-                                
+
                                 <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 hover:border-slate-200 transition-colors shadow-sm">
                                     <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-200">
                                         <span className="px-3 py-1 text-xs font-bold text-white bg-fuchsia-600 rounded shadow-md">傳說 II</span>
@@ -712,18 +841,23 @@
             return (
                 <div className="min-h-screen bg-slate-50 text-slate-800 p-4 md:p-8 font-sans">
                     <div className="max-w-7xl mx-auto px-4">
-                        
+
                         <div className="text-center space-y-3 mb-8">
                             <h1 className="text-3xl md:text-5xl font-black tracking-tight text-slate-800">
                                 天堂M <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-700">8周年改版轉職建議白皮書</span>
                             </h1>
-                            <p className="text-slate-500 text-sm md:text-base font-bold tracking-widest uppercase">
-                                名譽幣限時技能與轉職技能建議
-                            </p>
+                            <div className="flex flex-col items-center gap-2">
+                                <p className="text-slate-500 text-sm md:text-base font-bold tracking-widest uppercase flex items-center gap-3">
+                                    名譽幣限時技能與轉職技能建議
+                                    <span className="px-2 py-0.5 bg-slate-100 text-slate-400 text-[10px] font-bold rounded border border-slate-200 tracking-normal normal-case">
+                                        V.20251224
+                                    </span>
+                                </p>
+                            </div>
                         </div>
 
                         <div className="text-center text-slate-500 text-base mb-6 font-bold tracking-wide">
-                            <span>製作/ </span>
+                            <span>設計/製作：</span>
                             <a href="https://www.youtube.com/@bandonplay" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-800 transition-colors underline decoration-orange-300 underline-offset-4 decoration-2">
                                 編董不雷
                             </a>
@@ -732,27 +866,25 @@
                         <div className="flex flex-wrap justify-center gap-2 mb-6 sticky top-4 z-10 bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-lg border border-slate-200/60 max-w-fit mx-auto ring-1 ring-slate-900/5">
                             <button
                                 onClick={() => setActiveTab('home')}
-                                className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${
-                                    activeTab === 'home' 
-                                        ? 'bg-slate-800 text-white shadow-md' 
-                                        : 'bg-transparent text-slate-600 hover:bg-slate-100'
-                                }`}
+                                className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${activeTab === 'home'
+                                    ? 'bg-slate-800 text-white shadow-md'
+                                    : 'bg-transparent text-slate-600 hover:bg-slate-100'
+                                    }`}
                             >
                                 <Home className="w-4 h-4" />
                                 首頁
                             </button>
-                            
+
                             <div className="w-px h-6 bg-slate-200 mx-1 self-center hidden md:block"></div>
 
                             {classesConfig.map(cls => (
                                 <button
                                     key={cls.id}
                                     onClick={() => setActiveTab(cls.id)}
-                                    className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${
-                                        activeTab === cls.id 
-                                            ? `bg-gradient-to-r ${cls.gradient} text-white shadow-md` 
-                                            : `bg-transparent text-slate-600 hover:bg-slate-100`
-                                    }`}
+                                    className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${activeTab === cls.id
+                                        ? `bg-gradient-to-r ${cls.gradient} text-white shadow-md`
+                                        : `bg-transparent text-slate-600 hover:bg-slate-100`
+                                        }`}
                                 >
                                     {cls.icon}
                                     {cls.name}
@@ -761,10 +893,10 @@
                         </div>
 
                         <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
-                            <a 
-                                href="https://bandon1016.github.io/job-change-cost/" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+                            <a
+                                href="https://bandon1016.github.io/job-change-cost/"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
                             >
                                 <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
@@ -773,11 +905,11 @@
                                 <span>轉職袋子需求計算機</span>
                                 <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-400 ml-1" />
                             </a>
-                            
-                            <a 
-                                href="https://bandon1016.github.io/exp-calc/" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
+
+                            <a
+                                href="https://bandon1016.github.io/exp-calc/"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
                             >
                                 <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
@@ -794,23 +926,27 @@
                                     <div className="max-w-4xl mx-auto mb-8 bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
                                         <h3 className="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
                                             <Info className="w-5 h-5 text-indigo-600" />
-                                            功能更新說明
+                                            20251224更新內容：
                                         </h3>
-                                        <ul className="space-y-2 text-slate-600 text-sm font-medium">
+                                        <ul className="space-y-3 text-slate-600 text-sm font-medium">
                                             <li className="flex items-start gap-2">
-                                                <span className="text-indigo-500 mt-0.5">•</span>
-                                                <span>新增選取功能，將想轉職的技能勾選後，工具會自動編號顯示技能數量，方便調整轉職選擇技能。</span>
+                                                <span className="text-indigo-500 mt-0.5 font-bold">1.</span>
+                                                <span>新增各階技能距離滿技所需名譽幣估算功能。您可透過交易所、活動等更實惠方式取得。</span>
                                             </li>
                                             <li className="flex items-start gap-2">
-                                                <span className="text-indigo-500 mt-0.5">•</span>
-                                                <span>系統會自動勾選有等級的技能，如不需要可手動取消勾選。右上角的重置按鈕可讓技能選取狀態回復到預設(只勾選有等級技能)。</span>
+                                                <span className="text-indigo-500 mt-0.5 font-bold">2.</span>
+                                                <span>當勾選技能PVP/PVE方案時，系統將自動依推薦順序選取技能，如需調整也可手動變更。</span>
+                                            </li>
+                                            <li className="flex items-start gap-2">
+                                                <span className="text-indigo-500 mt-0.5 font-bold">3.</span>
+                                                <span>無法透過轉職取得的技能，顏色採淡化處理，降低對選取技能時的干擾。</span>
                                             </li>
                                         </ul>
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                                         {getAllClasses().map((config) => (
-                                            <div 
+                                            <div
                                                 key={config.id}
                                                 onClick={() => setActiveTab(config.id)}
                                                 className={`group cursor-pointer bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden ${config.hoverBorder}`}
@@ -820,10 +956,10 @@
                                                         {React.cloneElement(config.icon, { className: "w-8 h-8" })}
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="p-6 text-center">
                                                     <h2 className={`text-xl font-bold mb-4 ${config.color} tracking-wide`}>{config.name}</h2>
-                                                    
+
                                                     <div className="flex justify-center gap-3 text-sm">
                                                         <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[80px]">
                                                             <span className="text-base font-bold text-red-600 uppercase mb-1 tracking-wider">英雄</span>
@@ -878,4 +1014,5 @@
         root.render(<SkillInfoApp />);
     </script>
 </body>
+
 </html>
