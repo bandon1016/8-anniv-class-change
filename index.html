@@ -1987,7 +1987,7 @@
                             bottom: 'max(1rem, env(safe-area-inset-bottom))'
                         }}
                     >
-                        <div className="flex h-12 items-stretch rounded-lg shadow-[0_10px_30px_rgba(255,0,51,0.24)]">
+                        <div className="flex h-12 items-stretch rounded-lg shadow-[0_10px_30px_rgba(255,0,51,0.24)] transition-transform duration-200 hover:-translate-y-0.5">
                             <a
                                 href="https://www.youtube.com/@bandonplay?sub_confirmation=1"
                                 target="_blank"
@@ -1995,7 +1995,7 @@
                                 aria-label="訂閱編董不雷 YouTube 攻略頻道"
                                 title="訂閱編董不雷 YouTube 攻略頻道"
                                 onClick={handleSubscribeClick}
-                                className={`youtube-subscribe-cta ${isSubscribeExpanded ? 'is-expanded' : 'is-collapsed'} inline-flex h-12 items-center overflow-hidden rounded-l-lg border border-r-0 border-[#d9002b] bg-[#ff0033] text-white transition-[width,background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[#e6002e] focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300`}
+                                className={`youtube-subscribe-cta ${isSubscribeExpanded ? 'is-expanded' : 'is-collapsed'} inline-flex h-12 items-center overflow-hidden rounded-l-lg border border-r-0 border-[#d9002b] bg-[#ff0033] text-white transition-[width,background-color] duration-200 hover:bg-[#e6002e] focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300`}
                             >
                                 <span className="flex h-12 w-12 shrink-0 items-center justify-center">
                                     <Youtube className="h-5 w-5" strokeWidth={2.5} />
