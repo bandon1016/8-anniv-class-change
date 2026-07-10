@@ -31,6 +31,24 @@
             display: none;
         }
 
+        .youtube-subscribe-cta {
+            width: 13rem;
+        }
+
+        .youtube-subscribe-cta.is-collapsed {
+            width: 3rem;
+        }
+
+        .youtube-subscribe-label {
+            max-width: 10rem;
+            opacity: 1;
+        }
+
+        .youtube-subscribe-cta.is-collapsed .youtube-subscribe-label {
+            max-width: 0;
+            opacity: 0;
+        }
+
         @media (max-width: 767px) and (orientation: portrait) {
             .mobile-rotate-hint {
                 display: flex;
@@ -69,6 +87,7 @@
             .transfer-video-label,
             .transfer-reset-label,
             .contact-cta-label,
+            .youtube-subscribe-label,
             .orientation-label-suffix {
                 display: none;
             }
@@ -129,6 +148,15 @@
                 justify-content: center;
                 padding-left: 0.75rem !important;
                 padding-right: 0.75rem !important;
+            }
+
+            .youtube-subscribe-cta {
+                width: 48px !important;
+                border-radius: 0.5rem !important;
+            }
+
+            .youtube-subscribe-toggle {
+                display: none !important;
             }
         }
     </style>
@@ -860,6 +888,18 @@
             const [activeSkillInfo, setActiveSkillInfo] = useState(null);
             const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
             const [showRotateHint, setShowRotateHint] = useState(true);
+            const [isSubscribeExpanded, setIsSubscribeExpanded] = useState(() => {
+                if (typeof window === 'undefined') return true;
+
+                try {
+                    const savedPreference = window.localStorage.getItem('youtubeSubscribeExpanded');
+                    if (savedPreference !== null) return savedPreference === 'true';
+                } catch (error) {
+                    // Continue with the viewport default when storage is unavailable.
+                }
+
+                return window.matchMedia('(min-width: 768px)').matches;
+            });
 
             const getActiveMode = (classId) => classModes[classId] || getDefaultClassMode(classId);
 
@@ -951,6 +991,33 @@
                     job_class_name: activeClass ? activeClass.name : '首頁'
                 });
             }, [activeTab]);
+
+            const handleToggleSubscribe = () => {
+                const nextExpanded = !isSubscribeExpanded;
+                setIsSubscribeExpanded(nextExpanded);
+
+                try {
+                    window.localStorage.setItem('youtubeSubscribeExpanded', String(nextExpanded));
+                } catch (error) {
+                    // The control still works when storage is unavailable.
+                }
+
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', nextExpanded ? 'youtube_cta_expand' : 'youtube_cta_collapse', {
+                        job_class_id: activeTab,
+                        page_type: activeTab === 'home' ? 'home' : 'job_class'
+                    });
+                }
+            };
+
+            const handleSubscribeClick = () => {
+                if (typeof window.gtag !== 'function') return;
+
+                window.gtag('event', 'youtube_subscribe_click', {
+                    job_class_id: activeTab,
+                    page_type: activeTab === 'home' ? 'home' : 'job_class'
+                });
+            };
 
             const getSkillDescription = (classId, skillName) => {
                 return (skillDescriptions[classId] && skillDescriptions[classId][skillName]) || '';
@@ -1913,23 +1980,56 @@
                         <div className="h-20" aria-hidden="true"></div>
                     </div>
 
-                    <a
-                        href="https://lin.ee/2YOJMghc1"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="轉職需要補鑽？立刻聯繫 LINE 官方帳號 @dmshop"
-                        title="聯繫 LINE 官方帳號 @dmshop"
-                        className="contact-cta fixed z-[65] inline-flex min-h-[48px] max-w-[calc(100vw-2rem)] items-center gap-2.5 rounded-lg border border-[#05b94f] bg-[#06C755] px-3.5 py-3 text-white shadow-[0_10px_30px_rgba(6,199,85,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#05b94f] hover:shadow-[0_14px_34px_rgba(6,199,85,0.34)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#06C755]/30 sm:px-4"
+                    <div
+                        className="fixed z-[65] flex max-w-[calc(100vw-2rem)] flex-col items-end gap-2"
                         style={{
                             right: 'max(1rem, env(safe-area-inset-right))',
                             bottom: 'max(1rem, env(safe-area-inset-bottom))'
                         }}
                     >
-                        <MessageCircle className="h-5 w-5 shrink-0" strokeWidth={2.5} />
-                        <span className="contact-cta-label whitespace-nowrap text-[13px] font-black tracking-wide sm:text-sm">
-                            轉職需要補鑽？立刻聯繫
-                        </span>
-                    </a>
+                        <div className="flex h-12 items-stretch rounded-lg shadow-[0_10px_30px_rgba(255,0,51,0.24)]">
+                            <a
+                                href="https://www.youtube.com/@bandonplay?sub_confirmation=1"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="訂閱編董不雷 YouTube 攻略頻道"
+                                title="訂閱編董不雷 YouTube 攻略頻道"
+                                onClick={handleSubscribeClick}
+                                className={`youtube-subscribe-cta ${isSubscribeExpanded ? 'is-expanded' : 'is-collapsed'} inline-flex h-12 items-center overflow-hidden rounded-l-lg border border-r-0 border-[#d9002b] bg-[#ff0033] text-white transition-[width,background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[#e6002e] focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300`}
+                            >
+                                <span className="flex h-12 w-12 shrink-0 items-center justify-center">
+                                    <Youtube className="h-5 w-5" strokeWidth={2.5} />
+                                </span>
+                                <span className="youtube-subscribe-label overflow-hidden whitespace-nowrap pr-3 text-[13px] font-black tracking-wide transition-[max-width,opacity] duration-200 sm:text-sm">
+                                    訂閱攻略頻道
+                                </span>
+                            </a>
+                            <button
+                                type="button"
+                                onClick={handleToggleSubscribe}
+                                aria-label={isSubscribeExpanded ? '縮合訂閱按鈕' : '展開訂閱按鈕'}
+                                aria-expanded={isSubscribeExpanded}
+                                title={isSubscribeExpanded ? '縮合訂閱按鈕' : '展開訂閱按鈕'}
+                                className="youtube-subscribe-toggle flex h-12 w-9 shrink-0 items-center justify-center rounded-r-lg border border-[#d9002b] bg-[#d9002b] text-white transition-colors hover:bg-[#bd0026] focus-visible:z-10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-red-300"
+                            >
+                                <ChevronRight className={`h-4 w-4 transition-transform duration-200 ${isSubscribeExpanded ? '' : 'rotate-180'}`} strokeWidth={2.5} />
+                            </button>
+                        </div>
+
+                        <a
+                            href="https://lin.ee/2YOJMghc1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="轉職需要補鑽？立刻聯繫 LINE 官方帳號 @dmshop"
+                            title="聯繫 LINE 官方帳號 @dmshop"
+                            className="contact-cta inline-flex min-h-[48px] max-w-full items-center gap-2.5 rounded-lg border border-[#05b94f] bg-[#06C755] px-3.5 py-3 text-white shadow-[0_10px_30px_rgba(6,199,85,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#05b94f] hover:shadow-[0_14px_34px_rgba(6,199,85,0.34)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#06C755]/30 sm:px-4"
+                        >
+                            <MessageCircle className="h-5 w-5 shrink-0" strokeWidth={2.5} />
+                            <span className="contact-cta-label whitespace-nowrap text-[13px] font-black tracking-wide sm:text-sm">
+                                轉職需要補鑽？立刻聯繫
+                            </span>
+                        </a>
+                    </div>
                 </div>
             );
         };
