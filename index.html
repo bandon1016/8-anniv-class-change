@@ -132,17 +132,18 @@
             }
         }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZF8WGFTXMB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // React 頁面切換時另行送出虛擬 page_view，避免初始頁重複計數。
+        gtag('config', 'G-ZF8WGFTXMB', { send_page_view: false });
+    </script>
 </head>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BS3MLPQBVB"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-BS3MLPQBVB');
-</script>
 
 <body>
     <div id="root"></div>
@@ -926,6 +927,29 @@
                 setHoveredSkillInfo(null);
                 setActiveSkillInfo(null);
                 setIsToolsMenuOpen(false);
+            }, [activeTab]);
+
+            useEffect(() => {
+                if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+
+                const activeClass = classesConfig.find(config => config.id === activeTab);
+                const virtualRoute = activeClass ? `#/class/${activeClass.id}` : '#/home';
+                const pageTitle = activeClass
+                    ? `${activeClass.name}轉職建議 | 天堂M轉職建議白皮書`
+                    : '首頁 | 天堂M轉職建議白皮書';
+                const pagePath = `${window.location.pathname}${virtualRoute}`;
+                const pageLocation = `${window.location.href.split('#')[0]}${virtualRoute}`;
+
+                document.title = pageTitle;
+                window.gtag('event', 'page_view', {
+                    send_to: 'G-ZF8WGFTXMB',
+                    page_title: pageTitle,
+                    page_location: pageLocation,
+                    page_path: pagePath,
+                    page_type: activeClass ? 'job_class' : 'home',
+                    job_class_id: activeClass ? activeClass.id : 'home',
+                    job_class_name: activeClass ? activeClass.name : '首頁'
+                });
             }, [activeTab]);
 
             const getSkillDescription = (classId, skillName) => {
