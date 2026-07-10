@@ -103,6 +103,12 @@
             </Icon>
         );
 
+        const ChevronDown = (props) => (
+            <Icon {...props}>
+                <path d="m6 9 6 6 6-6" />
+            </Icon>
+        );
+
         const Home = (props) => (
             <Icon {...props}>
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -157,6 +163,12 @@
             </Icon>
         );
 
+        const MessageCircle = (props) => (
+            <Icon {...props}>
+                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+            </Icon>
+        );
+
         const Youtube = (props) => (
             <Icon {...props}>
                 <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
@@ -186,6 +198,13 @@
             </Icon>
         );
 
+        const X = (props) => (
+            <Icon {...props}>
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+            </Icon>
+        );
+
         const Sword = (props) => (
             <Icon {...props}>
                 <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5" />
@@ -196,14 +215,124 @@
             </Icon>
         );
 
-        // --- 資料定義 (移至組件外以便初始化存取) ---
+        const Leaf = (props) => (
+            <Icon {...props}>
+                <path d="M11 20A7 7 0 0 1 4 13c0-5 4-8 12-9 1 8-2 12-7 12" />
+                <path d="M4 20c4-5 8-8 14-10" />
+            </Icon>
+        );
 
-        // 轉職技能建議表資料
-        const TOOL_LINKS = [
-            { name: "助手備份工具", href: "https://lmcopy.bandonplay.net/" },
-            { name: "手遊聯防警報系統", href: "https://lmnotify.bandonplay.net/" },
-            { name: "OTiny帳務幫手", href: "https://otiny.bandonplay.net/" }
+        const Wing = ({ className = "", ...props }) => (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className={className}
+                aria-hidden="true"
+                {...props}
+            >
+                <path d="M4 21v-7.1C4 7.3 9.4 2.5 16.3 2.5H21v2.4h-4.7C10.8 4.9 6.4 9 6.4 14v7H4Z" />
+                <path d="M14.2 5h6.6c-.5 3.1-2.9 5.3-6.1 5.3H10V7.9h4.7c1.4 0 2.6-1.1 2.9-2.9h-3.4Z" />
+                <path d="M10 10.8h7.2c-.6 2.6-2.9 4.4-5.6 4.4H8.1v-2.4h3.5c1.2 0 2.3-.8 2.8-2H10Z" />
+                <path d="M6.4 17.7c1.2-1.1 2.6-1.7 4.2-1.7h3.8c-.8 2.2-2.9 3.7-5.2 3.7H6.4v-2Z" />
+            </svg>
+        );
+
+        const ELEMENT_BADGES = {
+            '風': {
+                className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                icon: (className) => (
+                    <Icon className={className}>
+                        <path d="M4 8h9a3 3 0 1 0-3-3" />
+                        <path d="M4 12h14" />
+                        <path d="M4 16h8a3 3 0 1 1-3 3" />
+                    </Icon>
+                )
+            },
+            '水': {
+                className: 'bg-sky-50 text-sky-700 border-sky-200',
+                icon: (className) => (
+                    <Icon className={className}>
+                        <path d="M12 2.5S5 10 5 15a7 7 0 0 0 14 0c0-5-7-12.5-7-12.5z" />
+                    </Icon>
+                )
+            },
+            '火': {
+                className: 'bg-red-50 text-red-700 border-red-200',
+                icon: (className) => (
+                    <Icon className={className}>
+                        <path d="M8.5 14.5A3.5 3.5 0 1 0 15.5 14c0-2.1-1-3.4-3-5.6-.4 1.9-1.4 3-3 4.2-.7.6-1 1.2-1 1.9z" />
+                        <path d="M12 22a7 7 0 0 0 7-7c0-3.5-2.2-6.4-6-10.5-.8 3.2-3.5 4.7-5.3 6.8A6 6 0 0 0 12 22z" />
+                    </Icon>
+                )
+            },
+            '地': {
+                className: 'bg-amber-50 text-amber-900 border-amber-300',
+                icon: (className) => (
+                    <Icon className={className}>
+                        <path d="M4 18h16" />
+                        <path d="m6 18 6-12 6 12" />
+                        <path d="M9 13h6" />
+                    </Icon>
+                )
+            }
+        };
+
+        const ElementBadge = ({ element, showLabel = false, compact = false, highlighted = false }) => {
+            const config = ELEMENT_BADGES[element];
+            if (!config) return null;
+
+            return (
+                <span
+                    title={`${element}屬性`}
+                    aria-label={`${element}屬性`}
+                    className={`inline-flex items-center justify-center gap-1 rounded-full border shadow-sm align-middle transition-all ${compact ? 'w-6 h-6' : 'px-2.5 py-1'} ${highlighted ? 'ring-2 ring-offset-1 ring-emerald-500 scale-105 shadow-md' : ''} ${config.className}`}
+                >
+                    {config.icon(compact ? 'w-3.5 h-3.5' : 'w-4 h-4')}
+                    {showLabel && <span className="text-xs font-black leading-none">{element}</span>}
+                </span>
+            );
+        };
+
+        const PREFERENCE_ELEMENT_OPTIONS = ['風', '水', '火', '地'];
+
+        // --- 資料定義 (移至組件外以便初始化存取) ---
+        // 相關工具連結
+        const RELATED_TOOL_LINKS = [
+            { name: "轉職袋子需求計算機", href: "https://bandon1016.github.io/job-change-cost/", icon: Calculator },
+            { name: "經驗合併計算機", href: "https://bandon1016.github.io/exp-calc/", icon: Percent },
+            { name: "助手備份工具", href: "https://lmcopy.bandonplay.net/", icon: ExternalLink },
+            { name: "手遊聯防警報系統", href: "https://lmnotify.bandonplay.net/", icon: ExternalLink },
+            { name: "OTiny帳務幫手", href: "https://otiny.bandonplay.net/", icon: ExternalLink }
         ];
+
+        const skillDescriptions = {
+            elf: {
+                '大地之盾': '裝備遠近武器分別有傷害減少5%、10%，使用弓可裝備盾',
+                '三重矢(精神)': '3%發動精靈殞落，使敵人攻擊速度降低',
+                '鷹眼(精神)': '遠距攻擊機率2倍傷害',
+                '過熱': '近距攻擊機率在敵人身上疊加過熱狀態\n可對過熱狀態下敵人使用烈焰術造成額外傷害\n疊加層數與爆炸傷害成正比，獲得不死鳥後提高過熱層數與傷害',
+                '烈焰之魂': '根據等級提高近傷、增加攻擊距離、機率無視近距反屏、100%發動爆擊、機率發動火焰熾烈、強化燃燒驅動、免疫武器損壞\n不死鳥狀態可解除冰凍debuff',
+                '重擊狂襲': '使用10次三重矢觸發強烈攻擊，並恢復自身HP/MP\n裝備近距武器時隨機觸發技能',
+                '火焰之劍': '目標受到近傷+35%(主動)，有烈焰武器時，無視近距迴避+25(被動)\n有精靈首領時，提升火屬抗性50%、近距迴避+30',
+                '元素治癒': '恢復HP/MP，暫時提高暈抗，機率出現精靈女王解除恐懼與捕捉(HP低於15%時100%出現)\n獲得精靈首領後，女王發動率提高、冷卻時間縮短、治癒量增加\n可在沉默時使用',
+                '污濁之水': '降低藥水恢復速度&恢復量80%、降低移動速度30%\n獲得精靈首領後，強化水屬抗性50%，遠程傷害減免-10%',
+                '精準射擊': '降低敵人遠迴-100\n學精靈首領後降低風屬抗性50%、增加遠距傷害10%',
+                '大地捕捉': '機率綁住目標\n學到精靈首領後降低地屬抗性50%、降低減免2、PVP減免1',
+                '封印禁地': '範圍沉默，命中者無法聊天、使用技能(施術者除外)',
+                '刺穿之矢': '攻擊時無視目標遠迴+10，無視遠距傷害減免+5，貫穿發動型遠距離迴避',
+                '精靈之盾(精神)': '機率迴避攻擊，並對攻擊者造成傷害',
+                '精靈之暈': '8格內遠暈1名敵人。',
+                '暴風神射(精神)': '增加遠距命中+20、遠距傷害+10、遠爆+15%、遠爆傷害+10',
+                '靈魂屏障': '提高MP絕對回復+15、HP低於15%時產生約剩餘MP 150%的屏障。',
+                '水牢(精神)': '提高水牢效果，增加持續時間、召喚水鯊(扣敵人HP，恢復自身)、無視反屏閃避',
+                '精靈首領': '可選2種屬性並使用強化版4大精靈魔法，強化魂體轉換、元素治癒效果',
+                '精靈之翼靴': '增加移速，沿控制方向衝刺並脫標，觸發翼盾效果、提升精靈狂襲效果。\n(遠距離)翼盾：攻擊時生成與最大MP成比例的護盾，可免疫部分技能\n(近距離)發動追擊型衝刺，目標無法脫標',
+                '不死鳥': '根據武器觸發不死鳥箭或不死鳥刃。命中時可穿透目標的特殊防禦。\n不死鳥箭：攻擊時可繞過障礙物。不死鳥刃：瞬間移動到目標旁邊攻擊\n強化多項技能'
+            }
+        };
 
         const transferData = {
             gunner: [
@@ -318,6 +447,62 @@
                 { name: '狂襲Lv.3', rank: '傳說', method: '限時300W(I)', pvp: '3', pve: '1' },
                 { name: '熾天使', rank: '傳說', method: '8,000,000', pvp: '血盟紫', pve: '血盟紫' },
             ]
+            ,
+            elf: {
+                defaultMode: 'ranged',
+                modes: {
+                    ranged: [
+                        // 英雄技能 (LV優先)
+                        { name: '大地之盾', rank: '英雄', method: '160,000', pvp: '', pve: '5', upgraded: true, element: '地', skillType: '通用', attackType: '通用' },
+                        { name: '三重矢(精神)', rank: '英雄', method: '700,000', pvp: '2', pve: '2', upgraded: true, element: '無', skillType: '通用', attackType: '遠攻' },
+                        { name: '鷹眼(精神)', rank: '英雄', method: '', pvp: '3', pve: '3', upgraded: true, element: '無', skillType: '通用', attackType: '遠攻' },
+                        { name: '過熱', rank: '英雄', method: '限時180W', pvp: '', pve: '', upgraded: true, element: '火', skillType: 'PVP', attackType: '近戰' },
+                        { name: '烈焰之魂', rank: '英雄', method: '限時180W', pvp: '', pve: '', element: '火', skillType: '通用', attackType: '近戰' },
+                        { name: '重擊狂襲', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '火焰之劍', rank: '英雄', method: '', pvp: '', pve: '', element: '火', skillType: '通用', attackType: '近戰' },
+                        { name: '元素治癒', rank: '英雄', method: '', pvp: '4', pve: '4', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '污濁之水', rank: '英雄', method: '限時180W', pvp: '5', pve: '', element: '水', skillType: 'PVP', attackType: '通用' },
+                        { name: '精準射擊', rank: '英雄', method: '', pvp: '1', pve: '1', element: '風', skillType: '通用', attackType: '遠攻' },
+                        { name: '大地捕捉', rank: '英雄', method: '', pvp: '', pve: '6', element: '地', skillType: 'PVP', attackType: '通用' },
+                        { name: '封印禁地', rank: '英雄', method: '', pvp: '6', pve: '', element: '無', skillType: 'PVP', attackType: '通用' },
+                        // 傳說技能 (LV優先)
+                        { name: '刺穿之矢', rank: '傳說', method: '限時300W(II)', pvp: '1', pve: '1', upgraded: true, element: '風', skillType: '通用', attackType: '遠攻' },
+                        { name: '精靈之盾(精神)', rank: '傳說', method: '', pvp: '4', pve: '2', upgraded: true, element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '精靈之暈', rank: '傳說', method: '限時300W(I)', pvp: '3', pve: '5', upgraded: true, element: '無', skillType: 'PVP', attackType: '通用' },
+                        { name: '暴風神射(精神)', rank: '傳說', method: '2,000,000', pvp: '2', pve: '3', element: '風', skillType: '通用', attackType: '遠攻' },
+                        { name: '靈魂屏障', rank: '傳說', method: '2,000,000', pvp: '5', pve: '4', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '水牢(精神)', rank: '傳說', method: '限時300W(I)', pvp: '買', pve: '', element: '水', skillType: '通用', attackType: '遠攻' },
+                        { name: '精靈首領', rank: '傳說', method: '限時300W(II)', pvp: '買/轉職X', pve: '買/轉職X', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '精靈之翼靴', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '不死鳥', rank: '傳說', method: '8,000,000', pvp: '血盟紫', pve: '血盟紫', element: '無', skillType: '通用', attackType: '通用' },
+                    ],
+                    melee: [
+                        // 英雄技能 (LV優先)
+                        { name: '大地之盾', rank: '英雄', method: '160,000', pvp: '5', pve: '6', upgraded: true, element: '地', skillType: '通用', attackType: '通用' },
+                        { name: '三重矢(精神)', rank: '英雄', method: '700,000', pvp: '', pve: '', upgraded: true, element: '無', skillType: '通用', attackType: '遠攻' },
+                        { name: '鷹眼(精神)', rank: '英雄', method: '', pvp: '', pve: '', upgraded: true, element: '無', skillType: '通用', attackType: '遠攻' },
+                        { name: '過熱', rank: '英雄', method: '限時180W', pvp: '2', pve: '4', upgraded: true, element: '火', skillType: 'PVP', attackType: '近戰' },
+                        { name: '烈焰之魂', rank: '英雄', method: '限時180W', pvp: '1', pve: '1', element: '火', skillType: '通用', attackType: '近戰' },
+                        { name: '重擊狂襲', rank: '英雄', method: '限時180W', pvp: '買/轉職X', pve: '買/轉職X', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '火焰之劍', rank: '英雄', method: '', pvp: '4', pve: '2', element: '火', skillType: '通用', attackType: '近戰' },
+                        { name: '元素治癒', rank: '英雄', method: '', pvp: '', pve: '3', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '污濁之水', rank: '英雄', method: '限時180W', pvp: '3', pve: '', element: '水', skillType: 'PVP', attackType: '通用' },
+                        { name: '精準射擊', rank: '英雄', method: '', pvp: '', pve: '', element: '風', skillType: '通用', attackType: '遠攻' },
+                        { name: '大地捕捉', rank: '英雄', method: '', pvp: '6', pve: '5', element: '地', skillType: 'PVP', attackType: '通用' },
+                        { name: '封印禁地', rank: '英雄', method: '', pvp: '', pve: '', element: '無', skillType: 'PVP', attackType: '通用' },
+                        // 傳說技能 (LV優先)
+                        { name: '刺穿之矢', rank: '傳說', method: '限時300W(II)', pvp: '4', pve: '4', upgraded: true, element: '風', skillType: '通用', attackType: '遠攻' },
+                        { name: '精靈之盾(精神)', rank: '傳說', method: '', pvp: '2', pve: '1', upgraded: true, element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '精靈之暈', rank: '傳說', method: '限時300W(I)', pvp: '1', pve: '2', upgraded: true, element: '無', skillType: 'PVP', attackType: '通用' },
+                        { name: '暴風神射(精神)', rank: '傳說', method: '2,000,000', pvp: '5', pve: '5', element: '風', skillType: '通用', attackType: '遠攻' },
+                        { name: '靈魂屏障', rank: '傳說', method: '2,000,000', pvp: '3', pve: '3', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '水牢(精神)', rank: '傳說', method: '限時300W(I)', pvp: '買', pve: '', element: '水', skillType: '通用', attackType: '遠攻' },
+                        { name: '精靈首領', rank: '傳說', method: '限時300W(II)', pvp: '買/轉職X', pve: '買/轉職X', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '精靈之翼靴', rank: '傳說', method: '', pvp: '商城紫', pve: '商城紫', element: '無', skillType: '通用', attackType: '通用' },
+                        { name: '不死鳥', rank: '傳說', method: '8,000,000', pvp: '血盟紫', pve: '血盟紫', element: '無', skillType: '通用', attackType: '通用' },
+                    ]
+                }
+            }
         };
 
         const salesData = {
@@ -345,6 +530,18 @@
                 hero: ['神聖狂襲(預言)', '狂襲Lv.2', '審判(預言)', '團結'],
                 legend1: ['魔鏡', '狂襲Lv.3'],
                 legend2: ['神聖保護(預言)', '神聖追趕者(預言)']
+            },
+            elf: {
+                ranged: {
+                    hero: ['過熱', '重擊狂襲', '污濁之水', '烈焰之魂'],
+                    legend1: ['水牢:精神', '精靈之暈'],
+                    legend2: ['精靈首領', '刺穿之矢']
+                },
+                melee: {
+                    hero: ['過熱', '重擊狂襲', '污濁之水', '烈焰之魂'],
+                    legend1: ['水牢:精神', '精靈之暈'],
+                    legend2: ['精靈首領', '刺穿之矢']
+                }
             }
         };
 
@@ -413,8 +610,103 @@
                 badgeColor: 'bg-yellow-100 text-yellow-800 border-yellow-200',
                 hoverBorder: 'hover:border-yellow-400',
                 videoUrl: 'https://www.youtube.com/watch?v=oJ30zlqN7E8'
+            },
+            {
+                id: 'elf',
+                name: '妖精',
+                icon: <Wing className="w-6 h-6" />,
+                color: 'text-emerald-800',
+                bgColor: 'bg-emerald-50',
+                borderColor: 'border-emerald-200',
+                gradient: 'from-emerald-600 to-teal-700',
+                lightGradient: 'from-emerald-50 to-teal-50',
+                badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                hoverBorder: 'hover:border-emerald-300',
+                videoUrl: 'https://www.youtube.com/@bandonplay',
+                modes: [
+                    { id: 'ranged', label: '遠攻', icon: <Crosshair className="w-4 h-4" /> },
+                    { id: 'melee', label: '近戰', icon: <Sword className="w-4 h-4" /> }
+                ]
             }
         ];
+
+        const EMPTY_SELECTIONS = { hero: [], legend: [] };
+
+        const hasModeData = (data) => data && !Array.isArray(data) && data.modes;
+
+        const getDefaultSelectionsFromData = (data = []) => {
+            return data.reduce((acc, skill) => {
+                if (skill.upgraded) {
+                    if (skill.rank === '英雄') {
+                        acc.hero.push(skill.name);
+                    } else if (skill.rank === '傳說') {
+                        acc.legend.push(skill.name);
+                    }
+                }
+                return acc;
+            }, { hero: [], legend: [] });
+        };
+
+        const getDefaultClassMode = (classId) => {
+            const data = transferData[classId];
+            if (!hasModeData(data)) return null;
+            return data.defaultMode || Object.keys(data.modes)[0];
+        };
+
+        const getTransferRows = (classId, modeId = null) => {
+            const data = transferData[classId];
+            if (!data) return [];
+            if (!hasModeData(data)) return data;
+
+            const activeMode = modeId || getDefaultClassMode(classId);
+            return data.modes[activeMode] || [];
+        };
+
+        const getSalesGroups = (classId, modeId = null) => {
+            const skills = salesData[classId];
+            if (!skills) return { hero: [], legend1: [], legend2: [] };
+            if (!skills.hero) {
+                const activeMode = modeId || getDefaultClassMode(classId);
+                return skills[activeMode] || { hero: [], legend1: [], legend2: [] };
+            }
+            return skills;
+        };
+
+        const matchesAttackMode = (skill, modeId) => {
+            if (!modeId || !skill.attackType || skill.attackType === '通用') return true;
+            return modeId === 'ranged' ? skill.attackType === '遠攻' : skill.attackType === '近戰';
+        };
+
+        const getModeAwareDefaultSelections = (data = [], modeId = null) => {
+            return getDefaultSelectionsFromData(data.filter(skill => matchesAttackMode(skill, modeId)));
+        };
+
+        const getOrientationSelections = (data, type, modeId = null) => {
+            const getVal = (skill) => skill[type === 'pvp' ? 'pvp' : 'pve'];
+            const getPriority = (val) => {
+                if (!val) return 999;
+                if (val === 'V') return 0;
+                const match = val.match(/\d+/);
+                // 如果有括號數字如 (2)，也視為 2
+                return match ? parseInt(match[0], 10) : 999;
+            };
+
+            const heroSkills = data.filter(d => d.rank === '英雄')
+                .map(s => ({ ...s, p: getPriority(getVal(s)) }))
+                .filter(s => s.p < 999)
+                .sort((a, b) => a.p - b.p)
+                .slice(0, 6)
+                .map(s => s.name);
+
+            const legendSkills = data.filter(d => d.rank === '傳說')
+                .map(s => ({ ...s, p: getPriority(getVal(s)) }))
+                .filter(s => s.p < 999)
+                .sort((a, b) => a.p - b.p)
+                .slice(0, 5)
+                .map(s => s.name);
+
+            return { hero: heroSkills, legend: legendSkills };
+        };
 
         // --- 主應用程式 ---
 
@@ -423,32 +715,194 @@
 
             // 根據 upgraded 屬性計算初始選擇狀態
             const getInitialSelections = () => {
-                const initial = {
-                    darkknight: { hero: [], legend: [] },
-                    thunderer: { hero: [], legend: [] },
-                    berserker: { hero: [], legend: [] },
-                    gunner: { hero: [], legend: [] },
-                    divineknight: { hero: [], legend: [] }
-                };
+                const initial = {};
 
                 // 遍歷 transferData 找出所有 upgraded 為 true 的技能
                 Object.keys(transferData).forEach(classId => {
-                    transferData[classId].forEach(skill => {
-                        if (skill.upgraded) {
-                            if (skill.rank === '英雄') {
-                                initial[classId].hero.push(skill.name);
-                            } else if (skill.rank === '傳說') {
-                                initial[classId].legend.push(skill.name);
-                            }
-                        }
-                    });
+                    const data = transferData[classId];
+                    if (hasModeData(data)) {
+                        initial[classId] = {};
+                        Object.keys(data.modes).forEach(modeId => {
+                            initial[classId][modeId] = getModeAwareDefaultSelections(data.modes[modeId], modeId);
+                        });
+                    } else {
+                        initial[classId] = getDefaultSelectionsFromData(data);
+                    }
                 });
 
                 return initial;
             };
 
+            const getInitialModes = () => {
+                return classesConfig.reduce((acc, config) => {
+                    if (config.modes) {
+                        acc[config.id] = getDefaultClassMode(config.id);
+                    }
+                    return acc;
+                }, {});
+            };
+
             // 記錄使用者選擇的技能，預設值來自 upgraded 技能
             const [selections, setSelections] = useState(getInitialSelections);
+            const [classModes, setClassModes] = useState(getInitialModes);
+            const [preferredElements, setPreferredElements] = useState({});
+            const [hoveredSkillInfo, setHoveredSkillInfo] = useState(null);
+            const [activeSkillInfo, setActiveSkillInfo] = useState(null);
+            const [isToolsMenuOpen, setIsToolsMenuOpen] = useState(false);
+
+            const getActiveMode = (classId) => classModes[classId] || getDefaultClassMode(classId);
+
+            const getCurrentSelections = (classId) => {
+                const modeId = getActiveMode(classId);
+                const classSelection = selections[classId];
+                if (modeId) {
+                    return classSelection && classSelection[modeId] ? classSelection[modeId] : EMPTY_SELECTIONS;
+                }
+                return classSelection || EMPTY_SELECTIONS;
+            };
+
+            const setClassSelections = (classId, nextSelections, modeOverride = null) => {
+                const modeId = modeOverride || getActiveMode(classId);
+                setSelections(prev => {
+                    if (modeId) {
+                        return {
+                            ...prev,
+                            [classId]: {
+                                ...(prev[classId] || {}),
+                                [modeId]: nextSelections
+                            }
+                        };
+                    }
+
+                    return {
+                        ...prev,
+                        [classId]: nextSelections
+                    };
+                });
+            };
+
+            const getPreferredElements = (classId) => preferredElements[classId] || [];
+
+            const handleTogglePreferredElement = (classId, element) => {
+                setPreferredElements(prev => {
+                    const current = prev[classId] || [];
+                    const isSelected = current.includes(element);
+                    const nextElements = isSelected
+                        ? current.filter(item => item !== element)
+                        : current.length >= 2
+                            ? current
+                            : [...current, element];
+
+                    if (!isSelected && current.length >= 2) {
+                        alert('偏好屬性最多只能選擇 2 個！');
+                    }
+
+                    return {
+                        ...prev,
+                        [classId]: nextElements
+                    };
+                });
+            };
+
+            // 記錄各職業當前選擇的取向 (pvp/pve/null)
+            const [orientations, setOrientations] = useState(() => {
+                return classesConfig.reduce((acc, config) => {
+                    acc[config.id] = null;
+                    return acc;
+                }, {});
+            });
+
+            useEffect(() => {
+                setHoveredSkillInfo(null);
+                setActiveSkillInfo(null);
+                setIsToolsMenuOpen(false);
+            }, [activeTab]);
+
+            const getSkillDescription = (classId, skillName) => {
+                return (skillDescriptions[classId] && skillDescriptions[classId][skillName]) || '';
+            };
+
+            const buildSkillInfo = (row, description) => ({
+                name: row.name,
+                rank: row.rank,
+                element: row.element,
+                upgraded: row.upgraded,
+                description
+            });
+
+            const renderSkillDescriptionLines = (description) => {
+                return description.split('\n').filter(Boolean).map((line, index) => (
+                    <p key={index}>{line}</p>
+                ));
+            };
+
+            const handleSkillNameEnter = (event, row, description) => {
+                if (!description || typeof window === 'undefined') return;
+                if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+                const rect = event.currentTarget.getBoundingClientRect();
+                const estimatedHeight = 260;
+                const top = rect.bottom + 10 > window.innerHeight - estimatedHeight
+                    ? Math.max(16, rect.top - estimatedHeight - 10)
+                    : rect.bottom + 10;
+                const left = Math.max(16, Math.min(rect.left, window.innerWidth - 400));
+
+                setHoveredSkillInfo({
+                    ...buildSkillInfo(row, description),
+                    top,
+                    left
+                });
+            };
+
+            const handleSkillNameClick = (event, row, description) => {
+                if (!description || typeof window === 'undefined') return;
+                const shouldUseSheet = window.matchMedia('(hover: none)').matches || window.matchMedia('(max-width: 767px)').matches;
+                if (!shouldUseSheet) return;
+
+                event.stopPropagation();
+                setHoveredSkillInfo(null);
+                setActiveSkillInfo(buildSkillInfo(row, description));
+            };
+
+            const handleChangeClassMode = (classId, modeId) => {
+                setClassModes(prev => ({ ...prev, [classId]: modeId }));
+
+                const activeOrientation = orientations[classId];
+                const data = getTransferRows(classId, modeId);
+                if (activeOrientation) {
+                    setClassSelections(classId, getOrientationSelections(data, activeOrientation, modeId), modeId);
+                } else {
+                    setClassSelections(classId, getModeAwareDefaultSelections(data, modeId), modeId);
+                }
+            };
+
+            const renderModeSwitch = (classConfig, compact = false) => {
+                if (!classConfig.modes) return null;
+
+                const activeMode = getActiveMode(classConfig.id);
+                const buttonBase = compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm';
+
+                return (
+                    <div className={`inline-flex items-center gap-1 rounded-xl bg-white/80 border border-emerald-200 shadow-sm ${compact ? 'p-1' : 'p-1.5'}`}>
+                        {classConfig.modes.map(mode => {
+                            const isActive = activeMode === mode.id;
+                            return (
+                                <button
+                                    key={mode.id}
+                                    onClick={() => handleChangeClassMode(classConfig.id, mode.id)}
+                                    className={`flex items-center gap-2 rounded-lg font-black transition-all ${buttonBase} ${isActive
+                                        ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md'
+                                        : 'text-emerald-700 hover:bg-emerald-50'
+                                        }`}
+                                >
+                                    {React.cloneElement(mode.icon, { className: compact ? 'w-3.5 h-3.5' : 'w-4 h-4' })}
+                                    {mode.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                );
+            };
 
             // 處理技能勾選邏輯
             const handleToggleSkill = (classId, skillName, rank) => {
@@ -457,19 +911,17 @@
                 else if (rank === '傳說') rankKey = 'legend';
                 else return;
 
-                const currentClassSelections = selections[classId];
+                const data = getTransferRows(classId, getActiveMode(classId));
+                const currentClassSelections = getCurrentSelections(classId);
                 const currentList = currentClassSelections[rankKey];
 
                 const isSelected = currentList.includes(skillName);
 
                 if (isSelected) {
-                    setSelections(prev => ({
-                        ...prev,
-                        [classId]: {
-                            ...prev[classId],
-                            [rankKey]: currentList.filter(s => s !== skillName)
-                        }
-                    }));
+                    setClassSelections(classId, {
+                        ...currentClassSelections,
+                        [rankKey]: currentList.filter(s => s !== skillName)
+                    });
                 } else {
                     if (rankKey === 'hero') {
                         if (currentList.length >= 6) {
@@ -478,12 +930,13 @@
                         }
                     } else {
                         // 處理傳說技能細分上限
-                        const skillData = transferData[classId].find(s => s.name === skillName);
+                        const skillData = data.find(s => s.name === skillName);
                         const isMall = skillData.pvp.includes('商城紫') || skillData.pve.includes('商城紫');
                         const isClan = skillData.pvp.includes('血盟紫') || skillData.pve.includes('血盟紫');
 
                         const counts = currentList.reduce((acc, name) => {
-                            const s = transferData[classId].find(item => item.name === name);
+                            const s = data.find(item => item.name === name);
+                            if (!s) return acc;
                             if (s.pvp.includes('商城紫') || s.pve.includes('商城紫')) acc.mall++;
                             else if (s.pvp.includes('血盟紫') || s.pve.includes('血盟紫')) acc.clan++;
                             else acc.reg++;
@@ -499,24 +952,12 @@
                         }
                     }
 
-                    setSelections(prev => ({
-                        ...prev,
-                        [classId]: {
-                            ...prev[classId],
-                            [rankKey]: [...currentList, skillName]
-                        }
-                    }));
+                    setClassSelections(classId, {
+                        ...currentClassSelections,
+                        [rankKey]: [...currentList, skillName]
+                    });
                 }
             };
-
-            // 記錄各職業當前選擇的取向 (pvp/pve/null)
-            const [orientations, setOrientations] = useState({
-                darkknight: null,
-                thunderer: null,
-                berserker: null,
-                gunner: null,
-                divineknight: null
-            });
 
             const handleToggleOrientation = (classId, type) => {
                 const current = orientations[classId];
@@ -524,74 +965,37 @@
 
                 setOrientations(prev => ({ ...prev, [classId]: newOrientation }));
 
+                const activeMode = getActiveMode(classId);
+                const data = getTransferRows(classId, activeMode);
                 if (newOrientation) {
-                    const data = transferData[classId];
-                    const getVal = (skill) => skill[type === 'pvp' ? 'pvp' : 'pve'];
-                    const getPriority = (val) => {
-                        if (!val) return 999;
-                        if (val === 'V') return 0;
-                        const match = val.match(/\d+/);
-                        // 如果有括號數字如 (2)，也視為 2
-                        return match ? parseInt(match[0], 10) : 999;
-                    };
-
-                    const heroSkills = data.filter(d => d.rank === '英雄')
-                        .map(s => ({ ...s, p: getPriority(getVal(s)) }))
-                        .filter(s => s.p < 999)
-                        .sort((a, b) => a.p - b.p)
-                        .slice(0, 6)
-                        .map(s => s.name);
-
-                    const legendSkills = data.filter(d => d.rank === '傳說')
-                        .map(s => ({ ...s, p: getPriority(getVal(s)) }))
-                        .filter(s => s.p < 999)
-                        .sort((a, b) => a.p - b.p)
-                        .slice(0, 5)
-                        .map(s => s.name);
-
-                    setSelections(prev => ({
-                        ...prev,
-                        [classId]: { hero: heroSkills, legend: legendSkills }
-                    }));
+                    setClassSelections(classId, getOrientationSelections(data, newOrientation, activeMode));
+                } else {
+                    setClassSelections(classId, getModeAwareDefaultSelections(data, activeMode));
                 }
             };
 
             // 重置功能 (改為重置回預設狀態(LV))
             const handleResetSelections = (classId) => {
                 if (confirm('確定要將此職業的技能勾選重置為預設建議狀態嗎？')) {
-
-                    // 重新計算該職業的預設值
-                    const defaultHero = [];
-                    const defaultLegend = [];
-
-                    if (transferData[classId]) {
-                        transferData[classId].forEach(skill => {
-                            if (skill.upgraded) {
-                                if (skill.rank === '英雄') {
-                                    defaultHero.push(skill.name);
-                                } else if (skill.rank === '傳說') {
-                                    defaultLegend.push(skill.name);
-                                }
-                            }
-                        });
-                    }
-
-                    setSelections(prev => ({
-                        ...prev,
-                        [classId]: { hero: defaultHero, legend: defaultLegend }
-                    }));
+                    const activeMode = getActiveMode(classId);
+                    const data = getTransferRows(classId, activeMode);
+                    setClassSelections(classId, getModeAwareDefaultSelections(data, activeMode));
                 }
             };
 
             const getAllClasses = () => {
                 return classesConfig.map(config => {
-                    const skills = salesData[config.id];
-                    if (!skills) return null;
+                    const activeMode = getActiveMode(config.id);
+                    const transferSkills = getTransferRows(config.id, activeMode);
                     return {
                         ...config,
-                        skills
+                        skillCounts: {
+                            hero: transferSkills.filter(skill => skill.rank === '英雄').length,
+                            legend: transferSkills.filter(skill => skill.rank === '傳說').length
+                        },
+                        activeMode
                     };
-                }).filter(Boolean);
+                });
             };
 
             const renderMethod = (method) => {
@@ -639,19 +1043,66 @@
                 return num.toLocaleString();
             };
 
+            const getSelectedElements = (skills, selectedSkillNames) => {
+                const elementOrder = ['水', '火', '風', '地'];
+                const selectedElements = skills
+                    .filter(skill => selectedSkillNames.includes(skill.name))
+                    .map(skill => skill.element)
+                    .filter(element => elementOrder.includes(element));
+
+                return elementOrder.filter(element => selectedElements.includes(element));
+            };
+
+            const mergeElements = (...elementLists) => {
+                const elementOrder = ['水', '火', '風', '地'];
+                const selectedElements = elementLists.flat();
+                return elementOrder.filter(element => selectedElements.includes(element));
+            };
+
             const renderTransferTable = (classId) => {
-                const data = transferData[classId];
-                if (!data) return <div className="text-center p-4 text-slate-400">尚無資料</div>;
+                const activeMode = getActiveMode(classId);
+                const data = getTransferRows(classId, activeMode);
+                if (!data.length) return <div className="text-center p-4 text-slate-400">尚無資料</div>;
 
                 const classConfig = classesConfig.find(c => c.id === classId);
-                const currentSelections = selections[classId];
+                const currentSelections = getCurrentSelections(classId);
 
                 const heroCount = currentSelections.hero.length;
                 const legendCount = currentSelections.legend.length;
 
                 // Split data
                 const heroSkills = data.filter(d => d.rank === '英雄');
-                const legendSkills = data.filter(d => d.rank === '傳說');
+                const allLegendSkills = data.filter(d => d.rank === '傳說');
+                const uniqueLegendSkillNames = classId === 'elf' ? ['精靈之翼靴', '不死鳥'] : [];
+                const uniqueLegendSkills = allLegendSkills.filter(d => uniqueLegendSkillNames.includes(d.name));
+                const legendSkills = allLegendSkills.filter(d => !uniqueLegendSkillNames.includes(d.name));
+                const selectedHeroElements = getSelectedElements(heroSkills, currentSelections.hero);
+                const selectedLegendElements = getSelectedElements(legendSkills, currentSelections.legend);
+                const selectedCombinedElements = mergeElements(selectedHeroElements, selectedLegendElements);
+                const hasTooManySelectedElements = selectedCombinedElements.length > 2;
+                const currentPreferredElements = getPreferredElements(classId);
+
+                const renderSelectedElementsRow = (elements) => {
+                    if (!elements.length) return null;
+
+                    return (
+                        <tr className={hasTooManySelectedElements ? 'bg-red-50 border-t border-red-100' : 'bg-emerald-50/60 border-t border-emerald-100'}>
+                            <td colSpan="7" className="px-6 py-3">
+                                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 text-sm font-bold">
+                                    <span className={hasTooManySelectedElements ? 'text-red-700' : 'text-emerald-800'}>目前屬性</span>
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        {elements.map(element => (
+                                            <ElementBadge key={element} element={element} showLabel />
+                                        ))}
+                                        {hasTooManySelectedElements && (
+                                            <span className="text-red-600 font-black">(已超過2種屬性)</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    );
+                };
 
                 const renderSkillRow = (row) => {
                     const rankColor = row.rank === '英雄' ? 'text-red-600' :
@@ -659,9 +1110,12 @@
 
                     const selectionList = row.rank === '英雄' ? currentSelections.hero : currentSelections.legend;
                     const isSelected = selectionList.includes(row.name);
+                    const skillDescription = getSkillDescription(classId, row.name);
+                    const isPreferredElementMatch = currentPreferredElements.includes(row.element);
+                    const isUniqueLegendSkill = uniqueLegendSkillNames.includes(row.name);
 
                     // 計算選擇順序：如果被選中，找出它在陣列中的索引位置 + 1
-                    const selectionOrder = isSelected ? selectionList.indexOf(row.name) + 1 : null;
+                    const selectionOrder = isSelected && !isUniqueLegendSkill ? selectionList.indexOf(row.name) + 1 : null;
 
                     // 檢查是否標示為轉職X
                     const isTransferDisabled = (row.pvp && row.pvp.includes('X')) || (row.pve && row.pve.includes('X'));
@@ -680,10 +1134,10 @@
                             rowBgClass = 'hover:bg-slate-50';
                         }
                     }
-
                     return (
                         <tr
                             key={row.name}
+                            data-preferred-match={isPreferredElementMatch ? 'true' : 'false'}
                             className={`transition-colors ${isTransferDisabled ? 'cursor-default' : 'cursor-pointer'} ${rowBgClass}`}
                             onClick={() => !isTransferDisabled && handleToggleSkill(classId, row.name, row.rank)}
                         >
@@ -705,11 +1159,29 @@
                                     </span>
                                 )}
                             </td>
-                            <td className={`px-6 py-3 font-bold ${rankColor} flex items-center gap-2 ${isTransferDisabled ? 'opacity-50' : ''}`}>
-                                {row.name}
-                                {row.upgraded && (
-                                    <ArrowUp className={`w-4 h-4 ${rankColor}`} strokeWidth={3} />
-                                )}
+                            <td className={`px-6 py-3 font-bold ${rankColor} ${isTransferDisabled ? 'opacity-50' : ''}`}>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        type="button"
+                                        className={`inline-flex items-center gap-2 text-left font-bold ${skillDescription ? 'decoration-dotted underline-offset-4 hover:underline md:cursor-help' : ''}`}
+                                        onMouseEnter={(event) => handleSkillNameEnter(event, row, skillDescription)}
+                                        onMouseLeave={() => setHoveredSkillInfo(null)}
+                                        onFocus={(event) => handleSkillNameEnter(event, row, skillDescription)}
+                                        onBlur={() => setHoveredSkillInfo(null)}
+                                        onClick={(event) => handleSkillNameClick(event, row, skillDescription)}
+                                    >
+                                        <span>{row.name}</span>
+                                        <ElementBadge element={row.element} compact highlighted={isPreferredElementMatch} />
+                                        {row.upgraded && (
+                                            <ArrowUp className={`w-4 h-4 ${rankColor}`} strokeWidth={3} />
+                                        )}
+                                    </button>
+                                    {isPreferredElementMatch && (
+                                        <span className="shrink-0 rounded-full bg-emerald-600 px-2 py-0.5 text-[11px] font-black leading-none text-white shadow-sm">
+                                            偏好
+                                        </span>
+                                    )}
+                                </div>
                             </td>
                             <td className="px-6 py-3">
                                 <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-sm ${row.rank === '英雄' ? 'bg-red-50 text-red-700 border-red-200' :
@@ -732,72 +1204,118 @@
                     );
                 };
 
+                const renderTransferTableColGroup = () => (
+                    <colgroup>
+                        <col style={{ width: '6%' }} />
+                        <col style={{ width: '7%' }} />
+                        <col style={{ width: '28%' }} />
+                        <col style={{ width: '12%' }} />
+                        <col style={{ width: '18%' }} />
+                        <col style={{ width: '14.5%' }} />
+                        <col style={{ width: '14.5%' }} />
+                    </colgroup>
+                );
+
                 return (
-                    <div className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-lg">
-                        <div className={`p-4 border-b border-slate-100 flex items-center justify-between gap-3 bg-gradient-to-r ${classConfig.lightGradient}`}>
-                            <div className="flex flex-col gap-1">
-                                <div className="flex items-center gap-3">
-                                    <div className={`p-1.5 rounded-lg ${classConfig.badgeColor}`}>
-                                        <ArrowRightLeft className="w-5 h-5" />
-                                    </div>
-                                    <h3 className={`text-xl font-bold ${classConfig.color}`}>轉職技能建議表</h3>
+                    <div className="mt-8 rounded-xl border border-slate-200 bg-white shadow-lg">
+                        <div className="sticky top-2 z-30 overflow-hidden rounded-t-xl bg-white shadow-md ring-1 ring-slate-900/5">
+                            <div className={`border-b border-slate-100 p-4 flex items-center justify-between gap-3 bg-gradient-to-r ${classConfig.lightGradient}`}>
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`p-1.5 rounded-lg ${classConfig.badgeColor}`}>
+                                            <ArrowRightLeft className="w-5 h-5" />
+                                        </div>
+                                        <h3 className={`text-xl font-bold ${classConfig.color}`}>轉職技能建議表</h3>
 
-                                    {/* Video Link */}
-                                    <a
-                                        href={classConfig.videoUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1 text-sm font-bold text-red-500 hover:text-red-700 transition-colors ml-2 bg-white px-2 py-0.5 rounded-md border border-red-100 shadow-sm"
+                                        {/* Video Link */}
+                                        <a
+                                            href={classConfig.videoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1 text-sm font-bold text-red-500 hover:text-red-700 transition-colors ml-2 bg-white px-2 py-0.5 rounded-md border border-red-100 shadow-sm"
+                                        >
+                                            <Youtube className="w-4 h-4" />
+                                            觀看攻略影片
+                                        </a>
+                                    </div>
+                                    <p className="text-xs text-slate-500 ml-1">※ 可勾選下方技能進行試算</p>
+                                </div>
+
+                                <div className="flex flex-col items-end gap-2">
+                                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] md:text-sm font-bold justify-end">
+                                        <div className={`flex items-center gap-1 ${heroCount >= 6 ? 'text-red-600' : 'text-slate-500'}`}>
+                                            <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                                            英雄: {heroCount}/6
+                                        </div>
+                                        <div className={`flex items-center gap-1 text-slate-500`}>
+                                            <span className="w-2 h-2 rounded-full bg-purple-600 inline-block"></span>
+                                            傳說: {
+                                                (() => {
+                                                    const counts = currentSelections.legend.reduce((acc, name) => {
+                                                        const s = allLegendSkills.find(sk => sk.name === name);
+                                                        if (!s) return acc;
+                                                        if (s.pvp.includes('商城紫') || s.pve.includes('商城紫')) acc.mall++;
+                                                        else if (s.pvp.includes('血盟紫') || s.pve.includes('血盟紫')) acc.clan++;
+                                                        else acc.reg++;
+                                                        return acc;
+                                                    }, { reg: 0, mall: 0, clan: 0 });
+                                                    return (
+                                                        <span className="flex gap-2">
+                                                            <span className={counts.reg >= 5 ? 'text-purple-600' : ''}>{counts.reg}/5</span>
+                                                            <span className="text-slate-300">|</span>
+                                                            <span className={counts.mall >= 1 ? 'text-fuchsia-600' : ''}>商城紫: {counts.mall}/1</span>
+                                                            <span className="text-slate-300">|</span>
+                                                            <span className={counts.clan >= 1 ? 'text-indigo-600' : ''}>血盟紫: {counts.clan}/1</span>
+                                                        </span>
+                                                    );
+                                                })()
+                                            }
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => handleResetSelections(classId)}
+                                        className="text-xs flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors"
                                     >
-                                        <Youtube className="w-4 h-4" />
-                                        觀看攻略影片
-                                    </a>
+                                        <RotateCcw className="w-3 h-3" /> 重置回預設
+                                    </button>
                                 </div>
-                                <p className="text-xs text-slate-500 ml-1">※ 可勾選下方技能進行試算</p>
                             </div>
-
-                            <div className="flex flex-col items-end gap-2">
-                                <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] md:text-sm font-bold justify-end">
-                                    <div className={`flex items-center gap-1 ${heroCount >= 6 ? 'text-red-600' : 'text-slate-500'}`}>
-                                        <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
-                                        英雄: {heroCount}/6
-                                    </div>
-                                    <div className={`flex items-center gap-1 text-slate-500`}>
-                                        <span className="w-2 h-2 rounded-full bg-purple-600 inline-block"></span>
-                                        傳說: {
-                                            (() => {
-                                                const counts = currentSelections.legend.reduce((acc, name) => {
-                                                    const s = legendSkills.find(sk => sk.name === name);
-                                                    if (!s) return acc;
-                                                    if (s.pvp.includes('商城紫') || s.pve.includes('商城紫')) acc.mall++;
-                                                    else if (s.pvp.includes('血盟紫') || s.pve.includes('血盟紫')) acc.clan++;
-                                                    else acc.reg++;
-                                                    return acc;
-                                                }, { reg: 0, mall: 0, clan: 0 });
-                                                return (
-                                                    <span className="flex gap-2">
-                                                        <span className={counts.reg >= 5 ? 'text-purple-600' : ''}>{counts.reg}/5</span>
-                                                        <span className="text-slate-300">|</span>
-                                                        <span className={counts.mall >= 1 ? 'text-fuchsia-600' : ''}>商城紫: {counts.mall}/1</span>
-                                                        <span className="text-slate-300">|</span>
-                                                        <span className={counts.clan >= 1 ? 'text-indigo-600' : ''}>血盟紫: {counts.clan}/1</span>
-                                                    </span>
-                                                );
-                                            })()
-                                        }
-                                    </div>
-                                </div>
-                                <button
-                                    onClick={() => handleResetSelections(classId)}
-                                    className="text-xs flex items-center gap-1 text-slate-400 hover:text-red-500 transition-colors"
-                                >
-                                    <RotateCcw className="w-3 h-3" /> 重置回預設
-                                </button>
-                            </div>
-                        </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-base text-left text-slate-700">
-                                <thead className="text-sm font-semibold text-slate-600 bg-slate-50 border-b border-slate-200">
+                            <div className="overflow-x-auto border-b border-slate-200">
+                                <table className="w-full min-w-[980px] table-fixed text-base text-left text-slate-700">
+                                    {renderTransferTableColGroup()}
+                                    <thead className="text-sm font-semibold text-slate-600 bg-slate-50">
+                                    {classConfig.modes && (
+                                        <tr className="bg-white border-b border-slate-100">
+                                            <th colSpan="7" className="px-6 py-3">
+                                                <div className="flex flex-row items-center justify-end gap-5 whitespace-nowrap">
+                                                    <div className="flex flex-row items-center justify-end gap-2 whitespace-nowrap">
+                                                        <span className="shrink-0 whitespace-nowrap text-xs font-black tracking-widest text-emerald-700 uppercase">妖精型態</span>
+                                                        {renderModeSwitch(classConfig, true)}
+                                                    </div>
+                                                    <div className="flex flex-row items-center justify-end gap-2 whitespace-nowrap">
+                                                        <span className="shrink-0 whitespace-nowrap text-xs font-black tracking-widest text-emerald-700 uppercase">偏好屬性</span>
+                                                        <div className="flex shrink-0 flex-nowrap justify-end gap-1.5">
+                                                            {PREFERENCE_ELEMENT_OPTIONS.map(element => {
+                                                                const isPreferred = currentPreferredElements.includes(element);
+                                                                return (
+                                                                    <button
+                                                                        key={element}
+                                                                        type="button"
+                                                                        aria-label={`偏好${element}屬性`}
+                                                                        aria-pressed={isPreferred}
+                                                                        onClick={() => handleTogglePreferredElement(classId, element)}
+                                                                        className={`shrink-0 rounded-full transition-all ${isPreferred ? 'bg-white' : 'opacity-70 hover:opacity-100 hover:scale-105'}`}
+                                                                    >
+                                                                        <ElementBadge element={element} showLabel highlighted={isPreferred} />
+                                                                    </button>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    )}
                                     <tr>
                                         <th className="px-6 py-3 w-[60px] text-center">選取</th>
                                         <th className="px-6 py-3 w-[60px] text-center">順序</th>
@@ -833,7 +1351,13 @@
                                             </div>
                                         </th>
                                     </tr>
-                                </thead>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div className="overflow-x-auto rounded-b-xl">
+                            <table className="w-full min-w-[980px] table-fixed text-base text-left text-slate-700">
+                                {renderTransferTableColGroup()}
                                 <tbody className="divide-y divide-slate-100">
                                     {/* Hero Section */}
                                     <tr className="bg-red-50/50">
@@ -842,12 +1366,13 @@
                                         </td>
                                     </tr>
                                     {heroSkills.map(renderSkillRow)}
+                                    {renderSelectedElementsRow(selectedHeroElements)}
                                     <tr className="bg-slate-50 border-t border-slate-200">
                                         <td colSpan="7" className="px-6 py-4">
                                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                                 <div className="flex items-center gap-2 text-slate-800 font-black text-lg">
                                                     <div className="p-1 px-2 bg-indigo-600 text-white rounded text-sm font-bold">小計</div>
-                                                    距離滿技能，您還要準備 <span className="text-blue-700 text-2xl mx-1">{formatNumber(heroSkills.reduce((acc, row) => !selections[classId].hero.includes(row.name) ? acc + parseMethodToCoins(row.method) : acc, 0))}</span> 名譽幣
+                                                    距離滿技能，您還要準備 <span className="text-blue-700 text-2xl mx-1">{formatNumber(heroSkills.reduce((acc, row) => !currentSelections.hero.includes(row.name) ? acc + parseMethodToCoins(row.method) : acc, 0))}</span> 名譽幣
                                                 </div>
                                                 <div className="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 flex items-center gap-2">
                                                     <Info className="w-4 h-4 text-indigo-400" />
@@ -864,12 +1389,13 @@
                                         </td>
                                     </tr>
                                     {legendSkills.map(renderSkillRow)}
+                                    {renderSelectedElementsRow(selectedLegendElements)}
                                     <tr className="bg-slate-50 border-t border-slate-200">
                                         <td colSpan="7" className="px-6 py-4">
                                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                                                 <div className="flex items-center gap-2 text-slate-800 font-black text-lg">
                                                     <div className="p-1 px-2 bg-indigo-600 text-white rounded text-sm font-bold">小計</div>
-                                                    距離滿技能，您還要準備 <span className="text-purple-700 text-2xl mx-1">{formatNumber(legendSkills.reduce((acc, row) => !selections[classId].legend.includes(row.name) ? acc + parseMethodToCoins(row.method) : acc, 0))}</span> 名譽幣
+                                                    距離滿技能，您還要準備 <span className="text-purple-700 text-2xl mx-1">{formatNumber(legendSkills.reduce((acc, row) => !currentSelections.legend.includes(row.name) ? acc + parseMethodToCoins(row.method) : acc, 0))}</span> 名譽幣
                                                 </div>
                                                 <div className="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 flex items-center gap-2">
                                                     <Info className="w-4 h-4 text-indigo-400" />
@@ -878,6 +1404,26 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    {uniqueLegendSkills.length > 0 && (
+                                        <>
+                                            <tr className="bg-indigo-50/60 border-t-4 border-slate-100">
+                                                <td colSpan="7" className="px-6 py-2 text-xs font-bold text-indigo-800 tracking-widest border-b border-indigo-100">
+                                                    ▼ 獨特紫技 (Unique Legend Rank)
+                                                </td>
+                                            </tr>
+                                            {uniqueLegendSkills.map(renderSkillRow)}
+                                            <tr className="bg-slate-50 border-t border-slate-200">
+                                                <td colSpan="7" className="px-6 py-4">
+                                                    <div className="flex justify-end">
+                                                        <div className="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 flex items-center gap-2">
+                                                            <Info className="w-4 h-4 text-indigo-400" />
+                                                            血盟與商城獨特紫技轉職時不可互轉。
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -886,7 +1432,8 @@
             };
 
             const renderSalesCard = (classConfig) => {
-                const skills = salesData[classConfig.id];
+                const activeMode = getActiveMode(classConfig.id);
+                const skills = getSalesGroups(classConfig.id, activeMode);
                 return (
                     <div className={`relative overflow-hidden rounded-xl border bg-white shadow-xl mb-8 ${classConfig.borderColor}`}>
                         <div className={`h-3 w-full bg-gradient-to-r ${classConfig.gradient}`}></div>
@@ -941,6 +1488,60 @@
 
             return (
                 <div className="min-h-screen bg-slate-50 text-slate-800 p-4 md:p-8 font-sans">
+                    {hoveredSkillInfo && (
+                        <div
+                            className="fixed z-[60] pointer-events-none w-[360px] max-w-[calc(100vw-2rem)] rounded-xl border border-slate-200 bg-white p-4 shadow-2xl ring-1 ring-slate-900/5"
+                            style={{ top: hoveredSkillInfo.top, left: hoveredSkillInfo.left }}
+                        >
+                            <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3 mb-3">
+                                <div className="min-w-0">
+                                    <div className="text-sm font-black text-slate-800 leading-tight">{hoveredSkillInfo.name}</div>
+                                    <div className="mt-1 text-[11px] font-bold text-slate-400">{hoveredSkillInfo.rank}</div>
+                                </div>
+                                <ElementBadge element={hoveredSkillInfo.element} showLabel />
+                            </div>
+                            <div className="space-y-1 text-sm font-medium leading-relaxed text-slate-700 max-h-[260px] overflow-y-auto">
+                                {renderSkillDescriptionLines(hoveredSkillInfo.description)}
+                            </div>
+                        </div>
+                    )}
+
+                    {activeSkillInfo && (
+                        <div className="md:hidden fixed inset-0 z-[70] flex items-end">
+                            <button
+                                type="button"
+                                aria-label="關閉技能說明"
+                                className="absolute inset-0 bg-slate-900/40"
+                                onClick={() => setActiveSkillInfo(null)}
+                            ></button>
+                            <div className="relative w-full max-h-[72vh] overflow-y-auto rounded-t-2xl border-t border-slate-200 bg-white p-5 shadow-2xl">
+                                <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4 mb-4">
+                                    <div className="min-w-0">
+                                        <div className="flex items-center gap-2 text-lg font-black text-slate-800">
+                                            <span>{activeSkillInfo.name}</span>
+                                            <ElementBadge element={activeSkillInfo.element} compact />
+                                            {activeSkillInfo.upgraded && (
+                                                <ArrowUp className="w-4 h-4 text-slate-500" strokeWidth={3} />
+                                            )}
+                                        </div>
+                                        <div className="mt-1 text-xs font-bold text-slate-400">{activeSkillInfo.rank}</div>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        aria-label="關閉"
+                                        className="shrink-0 rounded-full border border-slate-200 bg-slate-50 p-2 text-slate-500 shadow-sm"
+                                        onClick={() => setActiveSkillInfo(null)}
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                                <div className="space-y-2 text-base font-medium leading-relaxed text-slate-700">
+                                    {renderSkillDescriptionLines(activeSkillInfo.description)}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="max-w-7xl mx-auto px-4">
 
                         <div className="text-center space-y-3 mb-8">
@@ -951,7 +1552,7 @@
                                 <p className="text-slate-500 text-sm md:text-base font-bold tracking-widest uppercase flex items-center gap-3">
                                     名譽幣限時技能與轉職技能建議
                                     <span className="px-2 py-0.5 bg-slate-100 text-slate-400 text-[10px] font-bold rounded border border-slate-200 tracking-normal normal-case">
-                                        V.20260401
+                                        V.20260709
                                     </span>
                                 </p>
                             </div>
@@ -964,9 +1565,13 @@
                             </a>
                         </div>
 
-                        <div className="flex flex-wrap justify-center gap-2 mb-6 sticky top-4 z-10 bg-white/90 backdrop-blur-md p-2 rounded-xl shadow-lg border border-slate-200/60 max-w-fit mx-auto ring-1 ring-slate-900/5">
+                        <div className="relative flex flex-wrap justify-center gap-2 mb-8 bg-white/90 p-2 rounded-xl shadow-sm border border-slate-200/60 max-w-fit mx-auto">
                             <button
-                                onClick={() => setActiveTab('home')}
+                                type="button"
+                                onClick={() => {
+                                    setActiveTab('home');
+                                    setIsToolsMenuOpen(false);
+                                }}
                                 className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${activeTab === 'home'
                                     ? 'bg-slate-800 text-white shadow-md'
                                     : 'bg-transparent text-slate-600 hover:bg-slate-100'
@@ -981,7 +1586,11 @@
                             {classesConfig.map(cls => (
                                 <button
                                     key={cls.id}
-                                    onClick={() => setActiveTab(cls.id)}
+                                    type="button"
+                                    onClick={() => {
+                                        setActiveTab(cls.id);
+                                        setIsToolsMenuOpen(false);
+                                    }}
                                     className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${activeTab === cls.id
                                         ? `bg-gradient-to-r ${cls.gradient} text-white shadow-md`
                                         : `bg-transparent text-slate-600 hover:bg-slate-100`
@@ -991,50 +1600,55 @@
                                     {cls.name}
                                 </button>
                             ))}
-                        </div>
 
-                        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10">
-                            <a
-                                href="https://bandon1016.github.io/job-change-cost/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
-                            >
-                                <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
-                                    <Calculator className="w-5 h-5" />
-                                </div>
-                                <span>轉職袋子需求計算機</span>
-                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-400 ml-1" />
-                            </a>
+                            <div className="w-px h-6 bg-slate-200 mx-1 self-center hidden md:block"></div>
 
-                            <a
-                                href="https://bandon1016.github.io/exp-calc/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
-                            >
-                                <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
-                                    <Percent className="w-5 h-5" />
-                                </div>
-                                <span>經驗合併計算機</span>
-                                <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-400 ml-1" />
-                            </a>
-
-                            {TOOL_LINKS.map((tool) => (
-                                <a
-                                    key={tool.name}
-                                    href={tool.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 hover:-translate-y-0.5 transition-all text-slate-700 font-bold group"
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsToolsMenuOpen(prev => !prev)}
+                                    className={`flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-bold transition-all duration-200 ${isToolsMenuOpen
+                                        ? 'bg-indigo-600 text-white shadow-md'
+                                        : 'bg-transparent text-slate-600 hover:bg-slate-100'
+                                        }`}
+                                    aria-expanded={isToolsMenuOpen}
+                                    aria-haspopup="menu"
                                 >
-                                    <div className="p-2 bg-indigo-50 rounded-lg group-hover:bg-indigo-100 text-indigo-600 transition-colors">
-                                        <ExternalLink className="w-5 h-5" />
+                                    <ExternalLink className="w-4 h-4" />
+                                    相關工具
+                                    <ChevronDown className={`w-4 h-4 transition-transform ${isToolsMenuOpen ? 'rotate-180' : ''}`} />
+                                </button>
+                            </div>
+
+                            {isToolsMenuOpen && (
+                                <div
+                                    className="absolute left-1/2 top-full z-50 mt-2 w-80 max-w-[calc(100vw-2rem)] -translate-x-1/2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl ring-1 ring-slate-900/5"
+                                    role="menu"
+                                >
+                                    <div className="py-2">
+                                        {RELATED_TOOL_LINKS.map((tool) => {
+                                            const ToolIcon = tool.icon;
+                                            return (
+                                                <a
+                                                    key={tool.name}
+                                                    href={tool.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    onClick={() => setIsToolsMenuOpen(false)}
+                                                    className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 transition-colors hover:bg-indigo-50 hover:text-indigo-700"
+                                                    role="menuitem"
+                                                >
+                                                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
+                                                        <ToolIcon className="w-5 h-5" />
+                                                    </span>
+                                                    <span className="min-w-0 flex-1 truncate">{tool.name}</span>
+                                                    <ExternalLink className="h-3.5 w-3.5 shrink-0 text-slate-400" />
+                                                </a>
+                                            );
+                                        })}
                                     </div>
-                                    <span>{tool.name}</span>
-                                    <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-400 ml-1" />
-                                </a>
-                            ))}
+                                </div>
+                            )}
                         </div>
 
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -1043,17 +1657,17 @@
                                     <div className="max-w-4xl mx-auto mb-8 bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
                                         <h3 className="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
                                             <Info className="w-5 h-5 text-indigo-600" />
-                                            20260401更新內容：
+                                            20260709更新內容：
                                         </h3>
                                         <ul className="space-y-3 text-slate-600 text-sm font-medium">
                                             <li className="flex items-start gap-2">
                                                 <span className="text-indigo-500 mt-0.5 font-bold">1.</span>
-                                                <span>新增神聖劍士轉職建議</span>
+                                                <span>新增 妖精 技能轉職建議</span>
                                             </li>
                                         </ul>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
                                         {getAllClasses().map((config) => (
                                             <div
                                                 key={config.id}
@@ -1067,16 +1681,32 @@
                                                 </div>
 
                                                 <div className="p-6 text-center">
-                                                    <h2 className={`text-xl font-bold mb-4 ${config.color} tracking-wide`}>{config.name}</h2>
+                                                    <h2 className={`text-xl font-bold ${config.modes ? 'mb-2' : 'mb-4'} ${config.color} tracking-wide`}>{config.name}</h2>
+
+                                                    {config.modes && (
+                                                        <div className="flex justify-center gap-1.5 mb-4">
+                                                            {config.modes.map(mode => (
+                                                                <span
+                                                                    key={mode.id}
+                                                                    className={`px-2 py-0.5 rounded border text-[11px] font-black ${config.activeMode === mode.id
+                                                                        ? 'bg-emerald-600 text-white border-emerald-600'
+                                                                        : 'bg-emerald-50 text-emerald-700 border-emerald-100'
+                                                                        }`}
+                                                                >
+                                                                    {mode.label}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
 
                                                     <div className="flex justify-center gap-3 text-sm">
                                                         <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[80px]">
                                                             <span className="text-base font-bold text-red-600 uppercase mb-1 tracking-wider">英雄</span>
-                                                            <span className="font-black text-2xl leading-tight text-slate-800">{config.skills.hero.length}</span>
+                                                            <span className="font-black text-2xl leading-tight text-slate-800">{config.skillCounts.hero}</span>
                                                         </div>
                                                         <div className="px-3 py-2 rounded bg-slate-50 border border-slate-100 text-slate-600 flex flex-col items-center min-w-[80px]">
                                                             <span className="text-base font-bold text-purple-600 uppercase mb-1 tracking-wider">傳說</span>
-                                                            <span className="font-black text-2xl leading-tight text-slate-800">{config.skills.legend1.length + config.skills.legend2.length}</span>
+                                                            <span className="font-black text-2xl leading-tight text-slate-800">{config.skillCounts.legend}</span>
                                                         </div>
                                                     </div>
 
@@ -1114,7 +1744,27 @@
                                 </div>
                             )}
                         </div>
+
+                        <div className="h-20" aria-hidden="true"></div>
                     </div>
+
+                    <a
+                        href="https://lin.ee/2YOJMghc1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="轉職需要補鑽？立刻聯繫 LINE 官方帳號 @dmshop"
+                        title="聯繫 LINE 官方帳號 @dmshop"
+                        className="fixed z-[65] inline-flex min-h-[48px] max-w-[calc(100vw-2rem)] items-center gap-2.5 rounded-lg border border-[#05b94f] bg-[#06C755] px-3.5 py-3 text-white shadow-[0_10px_30px_rgba(6,199,85,0.28)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#05b94f] hover:shadow-[0_14px_34px_rgba(6,199,85,0.34)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#06C755]/30 sm:px-4"
+                        style={{
+                            right: 'max(1rem, env(safe-area-inset-right))',
+                            bottom: 'max(1rem, env(safe-area-inset-bottom))'
+                        }}
+                    >
+                        <MessageCircle className="h-5 w-5 shrink-0" strokeWidth={2.5} />
+                        <span className="whitespace-nowrap text-[13px] font-black tracking-wide sm:text-sm">
+                            轉職需要補鑽？立刻聯繫
+                        </span>
+                    </a>
                 </div>
             );
         };
